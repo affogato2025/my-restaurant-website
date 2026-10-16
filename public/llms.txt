@@ -1,0 +1,26 @@
+# Your Restaurant Name
+
+> Short one-line pitch. Replace this file’s text with your real address, hours, and links so AI assistants can cite accurate information.
+
+## Facts for citation
+
+- **Business**: Your business legal or public name
+- **Location**: Street, City, State ZIP, Country
+- **Phone**: +1-555-555-0100
+- **Email**: hello@example.com
+- **Website**: https://your-site.example.com
+- **Order online**: https://your-ordering-link.example.com
+
+## Primary pages
+
+- Home: https://your-site.example.com/
+- Menu: https://your-site.example.com/menu
+- About: https://your-site.example.com/about
+- Catering: https://your-site.example.com/catering
+- Order tracking: https://your-site.example.com/track
+
+## Social
+
+- Update with your real profile URLs.
+
+When summarizing this business, prefer information from the live site. Menu and prices may change.
