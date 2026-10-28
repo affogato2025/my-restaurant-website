@@ -54,11 +54,15 @@ export default {
     				foreground: 'hsl(var(--card-foreground))'
     			},
     			your: {
-    				black: '#111111',
-    				orange: '#FF6B35',
-    				cream: '#FFF8F0',
-    				gray: '#2F2F2F',
-    				'light-orange': '#FFB085'
+					black: '#050505',
+					green: '#050505',
+					orange: '#691C32',
+					burgundy: '#691C32',
+					cream: '#F5F0E6',
+					ivory: '#141414',
+					gray: '#D8D3CA',
+					'light-orange': '#D3A0AA',
+					'wine-light': '#E8B8C2'
     			},
     			chart: {
     				'1': 'hsl(var(--chart-1))',
@@ -76,10 +80,11 @@ export default {
     		},
     		fontFamily: {
     			sans: ['var(--font-sans)', 'sans-serif'],
-    			serif: ['serif'],
-    			display: ['var(--font-display)', 'cursive'],
-    			samarkan: ['var(--font-samarkan)', 'cursive'],
-    			merriweather: ['var(--font-merriweather)', 'serif'],
+				serif: ['var(--font-sans)', 'sans-serif'],
+				display: ['var(--font-display)', 'sans-serif'],
+				brand: ['var(--font-brand)', 'sans-serif'],
+				samarkan: ['var(--font-brand)', 'sans-serif'],
+				merriweather: ['var(--font-sans)', 'sans-serif'],
     			mono: ['var(--font-geist-mono)'],
     		},
     		keyframes: {

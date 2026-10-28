@@ -1,17 +1,12 @@
-'use client';
-
-import { useState, useEffect, useCallback } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
-import { motion } from 'framer-motion';
-import { useRouter } from 'next/navigation';
 
 interface BestsellerCardProps {
   title: string;
   description: string;
   price: string;
   imageSrc: string;
-  isVegetarian?: boolean;
-  isSpicy?: boolean;
   category?: string;
 }
 
@@ -19,101 +14,40 @@ export default function BestsellerCard({
   title, 
   description, 
   price, 
-  imageSrc, 
-  isVegetarian = false,
-  isSpicy = false,
+  imageSrc,
   category = ''
 }: BestsellerCardProps) {
-  const router = useRouter();
-  const [imageLoaded, setImageLoaded] = useState(false);
-  const [imageError, setImageError] = useState(false);
-
-  // Optimized image loading with fallback
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (!imageLoaded && !imageError) {
-        setImageLoaded(true);
-      }
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, [imageLoaded, imageError]);
-
-  const handleImageLoad = useCallback(() => {
-    setImageLoaded(true);
-    setImageError(false);
-  }, []);
-
-  const handleImageError = useCallback(() => {
-    setImageError(true);
-    setImageLoaded(false);
-  }, []);
-
-  const handleCardClick = useCallback(() => {
-    router.push('/menu');
-  }, [router]);
-
   return (
-    <motion.div
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
-      className="group bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 cursor-pointer"
-      onClick={handleCardClick}
-      role="button"
-      tabIndex={0}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          handleCardClick();
-        }
-      }}
+    <Link
+      href="/menu"
+      aria-label={`View ${title} on the dinner menu`}
+      className="group block overflow-hidden rounded-xl bg-your-ivory shadow-md transition-transform duration-500 hover:-translate-y-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-your-wine-light"
     >
-      <div className="relative h-48 overflow-hidden">
-        {!imageLoaded && !imageError && (
-          <div className="absolute inset-0 bg-gray-200 animate-pulse" />
-        )}
-        {imageError ? (
-          <div className="absolute inset-0 bg-gray-100 flex items-center justify-center">
-            <div className="text-gray-400 text-sm">Image not available</div>
-          </div>
-        ) : (
-        <img
+      <div className="relative h-56 overflow-hidden bg-your-black">
+        <Image
           src={imageSrc}
           alt={title}
-            className={`object-cover transition-all duration-500 group-hover:scale-110 rounded-t-xl ${
-              imageLoaded ? 'opacity-100' : 'opacity-0'
-            }`}
-            onLoad={handleImageLoad}
-            onError={handleImageError}
-          loading="lazy"
-          style={{ width: '100%', height: '100%' }}
+          fill
+          sizes="(min-width: 768px) 33vw, 100vw"
+          className="object-cover transition-transform duration-700 group-hover:scale-105"
         />
-        )}
-        <div className="absolute top-2 left-2 flex gap-1">
-          {isVegetarian && (
-            <span className="bg-green-500 text-white text-xs px-2 py-1 rounded-full">
-              Veg
-            </span>
-          )}
-          {isSpicy && (
-            <span className="bg-red-500 text-white text-xs px-2 py-1 rounded-full">
-              Spicy
-            </span>
-          )}
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-your-black/45 via-transparent to-transparent" aria-hidden />
       </div>
-      <div className="p-4">
-        <div className="flex items-center justify-between mb-2">
-          <h3 className="font-display font-bold text-lg text-your-black group-hover:text-your-orange transition-colors">
+      <div className="p-5">
+        <p className="mb-3 text-[0.68rem] font-bold uppercase tracking-[0.2em] text-your-wine-light">
+          {category}
+        </p>
+        <div className="mb-2 flex items-start justify-between gap-4">
+          <h3 className="text-base font-bold leading-snug text-your-cream transition-colors group-hover:text-your-wine-light sm:text-lg">
             {title}
           </h3>
-          <span className="font-display font-bold text-your-orange">{price}</span>
+          <span className="shrink-0 text-base font-bold tabular-nums text-your-wine-light">{price}</span>
         </div>
-        <p className="text-gray-600 text-sm mb-3 line-clamp-2">{description}</p>
-        <div className="flex items-center justify-between">
-          <span className="text-xs text-gray-500 capitalize">{category}</span>
-          <ChevronRight className="w-4 h-4 text-your-orange group-hover:translate-x-1 transition-transform" />
+        <div className="flex items-end justify-between gap-4">
+          <p className="mb-0 text-sm font-medium leading-relaxed text-your-cream/65">{description}</p>
+          <ChevronRight className="h-4 w-4 shrink-0 text-your-wine-light transition-transform group-hover:translate-x-1" aria-hidden />
         </div>
       </div>
-    </motion.div>
+    </Link>
   );
 }

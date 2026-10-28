@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { Analytics as VercelAnalytics } from '@vercel/analytics/react';
 import Analytics from '@/components/Analytics';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -11,7 +10,6 @@ import OrderNowButton from '@/components/OrderNowButton';
 export default function LayoutClientWrapper({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <VercelAnalytics />
       <Analytics />
       <Navbar />
       <PageTransitionWrapper>
@@ -21,4 +19,4 @@ export default function LayoutClientWrapper({ children }: { children: React.Reac
       <OrderNowButton />
     </>
   );
-} 
+}

@@ -1,23 +1,3 @@
-/* Inter loads via next/font in app/fonts.ts; Playfair is a display fallback only */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap');
-
-/* Custom font faces */
-@font-face {
-  font-family: 'Samarkan';
-  src: url('/Fonts/samarkan/SAMARN__.TTF') format('truetype');
-  font-display: swap;
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Against';
-  src: url('/Fonts/against/against regular.ttf') format('truetype');
-  font-display: swap;
-  font-weight: normal;
-  font-style: normal;
-}
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -25,26 +5,26 @@
 @layer base {
   :root {
     /* Color system */
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
+    --background: 0 0% 2%;
+    --foreground: 41 43% 93%;
+    --card: 0 0% 8%;
+    --card-foreground: 41 43% 93%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 41 43% 93%;
+    --primary: 0 0% 2%;
+    --primary-foreground: 41 43% 93%;
+    --secondary: 342 58% 26%;
+    --secondary-foreground: 41 43% 93%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 41 15% 72%;
+    --accent: 342 58% 26%;
+    --accent-foreground: 41 43% 93%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 240 10% 3.9%;
-    --radius: 0.5rem;
+    --border: 0 0% 28%;
+    --input: 0 0% 28%;
+    --ring: 342 58% 26%;
+    --radius: 0.75rem;
 
     /* Chart colors */
     --chart-1: 12 76% 61%;
@@ -54,10 +34,11 @@
     --chart-5: 27 87% 67%;
     
     /* Font variables */
-    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-    --font-display: 'Against', 'Playfair Display', serif;
-    --font-samarkan: 'Samarkan', cursive;
-    --font-merriweather: 'Merriweather', serif;
+    --font-sans: var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-display: var(--font-sans);
+    --font-brand: 'Gotham Rounded', var(--font-rounded), 'Nunito', 'Arial Rounded MT Bold', var(--font-sans);
+    --font-samarkan: var(--font-brand);
+    --font-merriweather: var(--font-sans);
     --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco', monospace;
   }
 
@@ -110,40 +91,50 @@
     margin: 0;
     padding: 0;
     min-height: 100vh;
+    font-weight: 500;
     font-feature-settings: 'rlig' 1, 'calt' 1;
-    /* Hide scrollbar globally */
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    scrollbar-color: #691c32 #050505;
+    scrollbar-width: thin;
   }
 
   body::-webkit-scrollbar {
-    display: none;
+    width: 10px;
   }
 
-  /* Hide scrollbar for all elements */
-  * {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+  body::-webkit-scrollbar-track {
+    background: #050505;
   }
 
-  *::-webkit-scrollbar {
-    display: none;
+  body::-webkit-scrollbar-thumb {
+    background: #691c32;
+    border: 2px solid #050505;
+    border-radius: 999px;
+  }
+
+  body::-webkit-scrollbar-thumb:hover {
+    background: #111111;
   }
 
   /* Typography */
   h1, h2, h3, h4, h5, h6 {
     @apply font-display;
+    font-weight: 700;
     line-height: 1.2;
     margin: 0;
   }
 
   /* Debug font loading - ensure fonts are applied */
   .font-samarkan {
-    font-family: 'Samarkan', cursive !important;
+    font-family: var(--font-brand) !important;
   }
 
   .font-display {
-    font-family: 'Against', 'Playfair Display', serif !important;
+    font-family: var(--font-sans) !important;
+  }
+
+  .font-brand {
+    font-family: var(--font-brand) !important;
+    font-weight: 700;
   }
 
 
@@ -182,7 +173,7 @@
 
   /* Card styles */
   .glass-card {
-    @apply bg-white/80 backdrop-blur-sm border border-white/20;
+    @apply bg-your-ivory/90 backdrop-blur-sm border border-your-cream/20;
   }
 
   /* Navigation styles */
@@ -230,7 +221,7 @@
 
   /* Loading states */
   .loading-skeleton {
-    @apply animate-pulse bg-gray-200 rounded;
+    @apply animate-pulse bg-your-ivory rounded;
   }
 
   /* Button styles */
@@ -241,23 +232,13 @@
   }
 
   .btn-secondary {
-    @apply bg-gray-200 text-gray-800 px-6 py-3 rounded-lg font-semibold;
-    @apply hover:bg-gray-300 transition-colors duration-200;
-    @apply focus:ring-2 focus:ring-gray-300 focus:outline-none;
+    @apply bg-your-ivory text-your-cream px-6 py-3 rounded-lg font-semibold;
+    @apply hover:bg-your-cream/15 transition-colors duration-200;
+    @apply focus:ring-2 focus:ring-your-cream/30 focus:outline-none;
   }
 }
 
 @layer utilities {
-  /* Scrollbar hiding */
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
-
   /* Google Places autocomplete */
   .pac-container {
     z-index: 10000 !important;
@@ -320,7 +301,7 @@
   width: auto;
   height: auto;
   padding: 0.75rem 1.5rem;
-  background: #fb923c;
+  background: #691c32;
   color: #fff;
   border-radius: 0.5rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);

@@ -5,10 +5,12 @@ import { cn } from "@/lib/utils";
 export const InteractiveHoverButton = React.forwardRef<
   HTMLButtonElement,
   React.ButtonHTMLAttributes<HTMLButtonElement>
->(({ children, className, ...props }, ref) => {
+>(({ children, className, onClick, type = "button", ...props }, ref) => {
   return (
     <button
       ref={ref}
+      type={type}
+      onClick={onClick}
       className={cn(
         "group relative w-auto cursor-pointer overflow-hidden rounded-full border bg-background p-2 px-6 text-center font-semibold",
         className,

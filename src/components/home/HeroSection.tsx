@@ -1,12 +1,9 @@
 'use client';
 import Link from 'next/link';
-import { Check, ChevronDown, ChevronRight } from 'lucide-react';
-import { motion, useSpring } from 'framer-motion';
+import { ChevronDown, ChevronRight } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { useRef } from 'react';
-import { fadeInUp } from '@/utils/motion.variants';
-import MagneticButton from '@/components/MagneticButton';
-import { PulsatingButton } from '@/components/magicui/pulsating-button';
-import { useRouter } from 'next/navigation';
+import { siteConfig } from '@/config/site';
 
 // New animation variant for smooth fade/slide
 const fadeSlide = {
@@ -16,11 +13,6 @@ const fadeSlide = {
 
 const HeroSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const router = useRouter();
-  
-  // Use spring physics for smooth animation
-  const springConfig = { stiffness: 50, damping: 20, mass: 1 };
-  const springProgress = useSpring(0, springConfig); // static spring
   
   // Subtle zoom and fade effect
   const scale = 1.12;
@@ -40,10 +32,11 @@ const HeroSection = () => {
       >
         <div className="absolute inset-0 bg-black/40 z-10" />
         {/* Subtle pulsing overlay */}
-        <div className="absolute inset-0 bg-white/5 animate-pulse-subtle pointer-events-none" />
+        <div className="absolute inset-0 bg-your-black/5 animate-pulse-subtle pointer-events-none" />
         <img
-          src="/Truck/truck-3.jpg"
-          alt="your Flavors Food Truck"
+          src="/Signature/restaurant-at-dusk.jpg"
+          alt=""
+          aria-hidden="true"
           className="object-cover w-full h-full absolute inset-0"
         />
       </motion.div>
@@ -70,27 +63,16 @@ const HeroSection = () => {
             viewport={{ once: true }}
             className="mb-6 md:mb-8"
           >
-            <h1 className="text-3xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight leading-tight">
-              <span className="text-white block">Authentic Indian Flavors</span>
-              <span className="text-your-orange block mt-2 font-bold">
-                On Wheels
+            <h1 className="mx-auto max-w-[20rem] sm:max-w-4xl text-[1.65rem] sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight leading-tight">
+              <span className="text-white block">
+                <span className="block sm:inline">New American</span>{' '}
+                <span className="block sm:inline">rooted in</span>
+              </span>
+              <span className="text-your-wine-light block mt-2 font-bold">
+                <span className="block sm:inline">farm and coastal</span>{' '}
+                <span className="block sm:inline">inspiration.</span>
               </span>
             </h1>
-          </motion.div>
-
-          {/* Features */}
-          <motion.div
-            variants={fadeSlide}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            transition={{ delay: 0.3 }}
-            className="flex flex-wrap items-center justify-center gap-4 mb-8 md:mb-10"
-          >
-            <MagneticButton className="!bg-emerald-800/95 !text-white px-5 py-2.5 rounded-full text-sm font-medium !border !border-emerald-500/40 flex items-center gap-2 hover:!bg-emerald-700 backdrop-blur-sm shadow-emerald-900/30">
-              <Check size={16} className="text-emerald-200" />
-              100% Halal
-            </MagneticButton>
           </motion.div>
 
           {/* CTA Buttons - Revert to glass style */}
@@ -100,25 +82,21 @@ const HeroSection = () => {
             whileInView="visible"
             viewport={{ once: true }}
             transition={{ delay: 0.45 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4"
+            className="flex flex-col items-center justify-center gap-4 sm:flex-row"
           >
-            <Link href="/menu">
-              <MagneticButton
-                className="w-full sm:w-auto flex items-center justify-center gap-2 !bg-your-orange !text-white hover:!bg-your-orange/90"
-                onClick={() => router.push('/menu')}
-              >
-                <span>Order Online</span>
+            <Link
+              href="/#connect"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-your-orange px-6 py-3 font-semibold text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-your-orange/90 hover:shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-your-cream focus-visible:ring-offset-2 focus-visible:ring-offset-your-black sm:w-auto"
+            >
+                <span>Reserve a Table</span>
                 <ChevronRight size={20} className="text-white" />
-              </MagneticButton>
             </Link>
-            <Link href="/menu">
-              <MagneticButton
-                className="w-full sm:w-auto flex items-center justify-center !bg-white/10 !text-white backdrop-blur-md hover:!bg-white/20 !border-2 !border-white/70 hover:!border-white"
-                onClick={() => router.push('/menu')}
-              >
-                View Menu
-              </MagneticButton>
-            </Link>
+            <a
+              href={`mailto:${siteConfig.emailContact}?subject=${encodeURIComponent('The Dorset reservation enquiry')}`}
+              className="inline-flex w-full items-center justify-center rounded-xl border-2 border-white/70 bg-your-black/10 px-6 py-3 font-semibold text-white shadow-lg backdrop-blur-md transition hover:-translate-y-0.5 hover:border-white hover:bg-your-black/20 hover:shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-your-cream focus-visible:ring-offset-2 focus-visible:ring-offset-your-black sm:w-auto"
+            >
+                Contact Us
+            </a>
           </motion.div>
         </div>
       </div>

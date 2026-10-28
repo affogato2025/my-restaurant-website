@@ -6,7 +6,9 @@ export const metadata: Metadata = {
   description: `Learn about ${siteConfig.businessName}: our story, mission, and how we serve our community.`,
   keywords: [
     `about ${siteConfig.businessName}`,
-    'food truck',
+    'New American restaurant story',
+    'farm and coastal cooking',
+    'Greenwich Village restaurant',
     'restaurant story',
     'catering',
   ],
@@ -15,10 +17,10 @@ export const metadata: Metadata = {
     description: `Learn about ${siteConfig.businessName} and our team.`,
     images: [
       {
-        url: `${SITE_URL}/Truck/truck-4.jpg`,
-        width: 1200,
-        height: 630,
-        alt: `${siteConfig.businessName} - About`,
+        url: `${SITE_URL}/Signature/restaurant-at-dusk.jpg`,
+        width: 2000,
+        height: 2998,
+        alt: `The dining atmosphere at ${siteConfig.businessName}`,
       },
     ],
   },

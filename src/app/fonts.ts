@@ -1,13 +1,13 @@
-import { Inter, Merriweather } from 'next/font/google';
+import { Inter, Nunito } from 'next/font/google';
 
 export const inter = Inter({
   subsets: ['latin'],
-  variable: '--font-sans',
+  variable: '--font-inter',
+  display: 'swap',
 });
 
-export const merriweather = Merriweather({
-  weight: ['300', '400', '700', '900'],
+export const nunito = Nunito({
   subsets: ['latin'],
-  variable: '--font-merriweather',
+  variable: '--font-rounded',
   display: 'swap',
-}); 
+});

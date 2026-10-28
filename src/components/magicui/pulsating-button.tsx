@@ -17,6 +17,8 @@ export const PulsatingButton = React.forwardRef<
       children,
       pulseColor = "#808080",
       duration = "1.5s",
+      onClick,
+      type = "button",
       ...props
     },
     ref,
@@ -24,6 +26,8 @@ export const PulsatingButton = React.forwardRef<
     return (
       <button
         ref={ref}
+        type={type}
+        onClick={onClick}
         className={cn(
           "relative flex cursor-pointer items-center justify-center rounded-lg bg-primary px-4 py-2 text-center text-primary-foreground transform transition-transform duration-100 ease-out hover:scale-10",
           className,

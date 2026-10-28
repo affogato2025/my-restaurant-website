@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { fadeInUp } from '@/utils/motion.variants';
 import { PulsatingButton } from '@/components/magicui/pulsating-button';
 import { Phone, Mail, MapPin } from 'lucide-react';
@@ -16,30 +17,19 @@ const Catering = () => {
 
   // Carousel media and state
   const media = [
-    { type: 'video', src: '/HomeCarousel/VID-20250609-WA0009.mp4' },
-    { type: 'video', src: '/HomeCarousel/VID-20250610-WA0082.mp4' },
-    { type: 'video', src: '/HomeCarousel/VID-20250609-WA0014.mp4' },
-    { type: 'video', src: '/HomeCarousel/VID-20250610-WA0076.mp4' },
-    { type: 'image', src: '/HomeCarousel/IMG-20250610-WA0023.jpg', alt: 'Delicious Dish' },
-    { type: 'video', src: '/HomeCarousel/VID-20250609-WA0011.mp4' },
+    { src: '/Venue/private-dining-guests.webp', alt: 'Guests gathered in a warmly lit private dining room' },
+    { src: '/Venue/candlelit-garden-table.png', alt: 'An intimate candlelit table prepared for dinner' },
+    { src: '/Venue/garden-dining-room.webp', alt: 'A garden dining room set for a daytime gathering' },
+    { src: '/Venue/garden-cocktails.webp', alt: 'Cocktails served before a garden gathering' },
+    { src: '/Venue/interior-floral-detail.png', alt: 'Seasonal floral details in a warm dining room' },
+    { src: '/Venue/dining-room-evening.webp', alt: 'A candlelit dining room prepared for the evening' },
   ];
 
-  // Only these videos should play audio; others remain muted
-  const unmutedVideos = ['/HomeCarousel/VID-20250610-WA0076.mp4', '/HomeCarousel/VID-20250610-WA0082.mp4'];
-
-  // Preload all carousel images and videos for smoother transitions
+  // Preload all carousel images for smoother transitions
   useEffect(() => {
     media.forEach(item => {
-      if (item.type === 'image') {
-        const img = new window.Image();
-        img.src = item.src;
-      } else if (item.type === 'video') {
-        const link = document.createElement('link');
-        link.rel = 'preload';
-        link.as = 'video';
-        link.href = item.src;
-        document.head.appendChild(link);
-      }
+      const img = new window.Image();
+      img.src = item.src;
     });
   }, []);
 
@@ -47,8 +37,6 @@ const Catering = () => {
   const [direction, setDirection] = useState(0);
   const [inView, setInView] = useState(false);
   const sectionRef = useRef(null);
-  const videoRef = useRef(null);
-  const fadeAudioInterval = useRef(null);
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => setInView(entry.isIntersecting),
@@ -59,27 +47,10 @@ const Catering = () => {
   }, []);
   useEffect(() => {
     let timeout;
-    const video = videoRef.current;
-    if (media[current].type === 'image') {
-      timeout = setTimeout(() => {
-        setDirection(1);
-        setCurrent((prev) => (prev + 1) % media.length);
-      }, 4000);
-    } else if (video) {
-      video.currentTime = 0;
-      const playPromise = video.play();
-      if (playPromise !== undefined) {
-        playPromise.catch((error) => {
-          console.warn('Video autoplay failed:', error);
-        });
-      }
-      const onEnded = () => {
-        setDirection(1);
-        setCurrent((prev) => (prev + 1) % media.length);
-      };
-      video.addEventListener('ended', onEnded);
-      return () => video.removeEventListener('ended', onEnded);
-    }
+    timeout = setTimeout(() => {
+      setDirection(1);
+      setCurrent((prev) => (prev + 1) % media.length);
+    }, 4500);
     return () => clearTimeout(timeout);
   }, [current]);
   const handlePrev = () => {
@@ -108,7 +79,7 @@ const Catering = () => {
   };
 
   return (
-    <div className="bg-your-cream">
+    <div className="bg-your-black w-full max-w-full overflow-x-hidden">
       {/* Hero Section */}
       <section className="relative min-h-[70svh] flex items-center justify-center overflow-hidden bg-your-black">
         <motion.div
@@ -118,11 +89,13 @@ const Catering = () => {
           transition={{ duration: 10, ease: 'easeInOut', repeat: Infinity, repeatType: 'reverse' }}
         >
           <div className="absolute inset-0 bg-black/40 z-10"></div>
-          <img
-            src="/Truck/IMG-20250603-WA0005.jpg"
-            alt="Premium Catering"
-            className="transform-gpu object-cover absolute inset-0 w-full h-full"
-            style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+          <Image
+            src="/Venue/private-dining-guests.webp"
+            alt="Guests gathered in a warmly lit private dining room"
+            fill
+            sizes="100vw"
+            className="object-cover object-center"
+            priority
           />
         </motion.div>
 
@@ -147,8 +120,11 @@ const Catering = () => {
               transition={{ duration: 0.7, delay: 0.5 }}
               className="mb-6 md:mb-8"
             >
-              <h1 className="text-4xl md:text-4xl lg:text-7xl font-display font-bold tracking-tight leading-tight">
-                <span className="text-your-orange block">Catering Your Events</span>
+              <h1 className="text-3xl sm:text-4xl lg:text-7xl font-display font-bold tracking-tight leading-tight">
+                <span className="text-your-wine-light block">
+                  <span className="block sm:inline">Gatherings,</span>{' '}
+                  <span className="block sm:inline">The Dorset Way</span>
+                </span>
               </h1>
             </motion.div>
 
@@ -158,9 +134,9 @@ const Catering = () => {
               whileInView="visible"
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: 0.8 }}
-              className="text-lg md:text-xl lg:text-2xl text-white font-merriweather leading-relaxed max-w-10xl mx-auto mb-4"
+              className="text-lg md:text-xl lg:text-2xl text-white font-sans font-semibold leading-relaxed max-w-10xl mx-auto mb-4"
             >
-              Flavors that bring people together - crafted for unforgettable gatherings.
+              Seasonal menus, thoughtful service and memorable hospitality for every occasion.
             </motion.p>
 
           </div>
@@ -180,56 +156,58 @@ const Catering = () => {
               transition={{ duration: 0.7, type: 'spring' }}
               className="w-full md:w-1/2 text-center md:text-left relative"
             >
-              <div className="absolute -left-10 -top-10 w-32 h-32 bg-gradient-to-br from-yellow-100/40 via-orange-100/20 to-white/0 rounded-full blur-2xl opacity-60 -z-10" />
+              <div className="absolute -left-10 -top-10 w-32 h-32 bg-gradient-to-br from-your-orange/15 via-your-orange/5 to-your-black/0 rounded-full blur-2xl opacity-60 -z-10" />
 
-              <h3 className="text-3xl md:text-4xl font-display font-bold text-your-orange mb-4 drop-shadow-sm">
+              <h3 className="text-3xl md:text-4xl font-display font-bold text-your-wine-light mb-4 drop-shadow-sm">
                 Catering Services
               </h3>
 
-              <p className="text-lg md:text-xl text-your-black mb-4 font-medium">
-              Bring the vibrant taste of India to your next event with <span className="font-samarkan font-bold text-2xl text-your-orange">your</span> <span className="font-semibold text-your-black">brand</span>. Our handcrafted dishes and heartfelt hospitality make every celebration unforgettable - whether it’s an intimate gathering or a grand occasion.
+              <p className="text-lg md:text-xl text-your-cream mb-4 font-medium">
+              From intimate dinners to corporate gatherings and milestone celebrations, <span className="font-brand font-bold text-your-wine-light">{siteConfig.businessName}</span> shapes seasonal menus around the occasion. Farm-led ingredients, coastal inspiration and attentive hospitality come together in every detail.
               </p>
-              <p className="text-lg md:text-xl text-your-black mb-4 font-medium">
-              We don’t just cater meals - we deliver an experience.
+              <p className="text-lg md:text-xl text-your-cream mb-4 font-medium">
+              Tell us how you want the gathering to feel, and we will build the menu and service around it.
               </p>
 
               <motion.ul
                 variants={listContainer}
                 initial="hidden"
                 animate="visible"
-                className="list-disc pl-5 text-your-black space-y-3 text-base md:text-lg font-medium"
+                className="list-disc pl-5 text-your-cream space-y-3 text-base md:text-lg font-medium"
               >
                 <motion.li variants={listItem}>
-                  📋 Customizable menus for weddings, corporate events, festivals, and private celebrations.
+                  Seasonal menus tailored to the occasion and guest count.
                 </motion.li>
                 <motion.li variants={listItem}>
-                  🍽️ Homemade dishes cooked with bold spices and traditional flavors.
+                  Plated dinners, cocktail receptions and private celebrations.
                 </motion.li>
                 <motion.li variants={listItem}>
-                  🚚 On-site food truck catering - fully equipped to serve hot, fresh meals at your party.
+                  Vegetarian and dietary accommodations with advance notice.
                 </motion.li>
                 <motion.li variants={listItem}>
-                  👨‍🍳 Professional & Friendly Team that ensures smooth service, from setup to the last bite.
+                  Thoughtful planning and attentive service from the first conversation to the final course.
                 </motion.li>
               </motion.ul>
             </motion.div>
             {/* Carousel Column */}
-            <div className="w-full md:w-1/2 flex justify-center items-center relative">
-              <div className="w-[800px] h-[600px] rounded-2xl overflow-hidden shadow-2xl bg-gray-100 flex items-center justify-center relative">
+            <div className="w-full min-w-0 md:w-1/2 flex justify-center items-center relative">
+              <div className="w-full max-w-[800px] h-[420px] sm:h-[520px] md:h-[600px] rounded-2xl overflow-hidden shadow-2xl bg-your-ivory flex items-center justify-center relative">
                 <AnimatePresence initial={false} custom={direction}>
                   <motion.div key={current} custom={direction} initial={{ opacity: 0, x: direction > 0 ? 120 : -120 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: direction > 0 ? -120 : 120 }} transition={{ duration: 0.5, type: 'spring' }} className="absolute inset-0 flex items-center justify-center">
-                    {media[current].type === 'image' ? (
-                      <img src={media[current].src} alt={media[current].alt || ''} className="object-cover w-full h-full" />
-                    ) : (
-                      <video ref={videoRef} src={media[current].src} autoPlay muted={!unmutedVideos.includes(media[current].src)} playsInline preload="auto" className="object-cover w-full h-full" title={media[current].alt} />
-                    )}
+                    <Image
+                      src={media[current].src}
+                      alt={media[current].alt}
+                      fill
+                      sizes="(min-width: 768px) 50vw, 100vw"
+                      className="object-cover object-center transition-transform duration-500"
+                    />
                   </motion.div>
                 </AnimatePresence>
                 <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-4 z-20">
-                  <button onClick={handlePrev} aria-label="Previous" className="bg-white/80 hover:bg-yellow-400/90 text-yellow-700 hover:text-white rounded-full p-3 shadow transition-colors">
+                  <button onClick={handlePrev} aria-label="Previous" className="bg-your-ivory/90 hover:bg-your-orange text-your-wine-light hover:text-white rounded-full p-3 shadow transition-colors">
                     <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" /></svg>
                   </button>
-                  <button onClick={handleNext} aria-label="Next" className="bg-white/80 hover:bg-yellow-400/90 text-yellow-700 hover:text-white rounded-full p-3 shadow transition-colors">
+                  <button onClick={handleNext} aria-label="Next" className="bg-your-ivory/90 hover:bg-your-orange text-your-wine-light hover:text-white rounded-full p-3 shadow transition-colors">
                     <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" /></svg>
                   </button>
                 </div>
@@ -238,61 +216,52 @@ const Catering = () => {
           </div>
         </section>
 
-        {/* Tray Pricing Download */}
+        {/* Private Events Enquiry */}
         <section className="text-center">
-          <h2 className="text-3xl font-display font-bold text-your-black mb-4">
-            Tray Pricing
+          <h2 className="text-3xl font-display font-bold text-your-cream mb-4">
+            Private Events &amp; Catering Enquiries
           </h2>
-          <p className="text-your-black mb-4 text-2xl font-medium font-semibold max-w-3xl mx-auto">
-            Don't need our food truck at your event?{' '}
-            <motion.span
-              initial={{ y: 1 }}
-              animate={{ y: [-3,4] }}
-              transition={{ duration: 1.5, repeat: Infinity, repeatType: 'reverse', ease: 'easeInOut' }}
-              className="inline-block"
-            >
-              😔
-            </motion.span>
-            <br />
+          <p className="text-your-cream mb-4 text-2xl font-medium font-semibold max-w-3xl mx-auto">
+            Every gathering is different, so each proposal is tailored to your menu, guest count and service needs.
           </p>
-          <p className="text-gray-600 text-lg font-medium max-w-7xl mx-auto mb-4">
-            We've got you covered. You can still enjoy our delicious, handcrafted dishes through our convenient tray ordering service<br /> - perfect for home parties, office lunches, and small gatherings.
+          <p className="text-your-cream/70 text-lg font-medium max-w-7xl mx-auto mb-4">
+            Share the occasion, preferred date and group size with us. We will follow up to shape a seasonal menu and service plan around your event.
           </p>  
 
-          <p className="text-gray-600 text-lg font-medium max-w-3xl mx-auto">
+          <p className="text-your-cream/70 text-lg font-medium max-w-3xl mx-auto">
             Fill out the{' '}
-            <a href="/#connect" className="text-your-orange underline hover:opacity-80 font-semibold">
+            <a href="/#connect" className="text-your-wine-light underline hover:opacity-80 font-semibold">
               Connect With Us
             </a>{' '}
-            form below to inquire about tray pricing and place your order.
+            form to begin your catering enquiry.
           </p>
         </section>
 
          {/* Contact Information and Quote Side-by-Side */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
             {/* Contact Information */}
-            <section className="bg-white rounded-xl shadow-lg pt-12 pb-12 px-6 h-full flex flex-col space-y-6">
-              <h2 className="text-3xl font-display font-bold text-your-black mb-8 text-center">
+            <section className="bg-your-ivory rounded-xl border border-your-cream/15 shadow-lg pt-12 pb-12 px-6 h-full flex flex-col space-y-6">
+              <h2 className="text-3xl font-display font-bold text-your-cream mb-8 text-center">
                 Connect With Us
               </h2>
 
               {/* Phone & Email side-by-side */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="flex items-center justify-center space-x-4">
-                  <Phone className="h-6 w-6 text-your-orange" />
+                  <Phone className="h-6 w-6 text-your-wine-light" />
                   <a
-                    href={`tel:${siteConfig.phoneE164.replace(/\D/g, '')}`}
-                    className="text-gray-700 hover:text-your-orange font-medium text-lg"
+                    href={`tel:${siteConfig.phoneE164}`}
+                    className="text-your-cream/80 hover:text-your-wine-light font-medium text-lg"
                   >
                     {siteConfig.phoneDisplay}
                   </a>
                 </div>
 
                 <div className="flex items-center space-x-4">
-                  <Mail className="h-6 w-6 text-your-orange" />
+                  <Mail className="h-6 w-6 text-your-wine-light" />
                   <a
                     href={`mailto:${siteConfig.emailContact}`}
-                    className="text-gray-700 hover:text-your-orange font-medium text-lg"
+                    className="text-your-cream/80 hover:text-your-wine-light font-medium text-lg"
                   >
                     {siteConfig.emailContact}
                   </a>
@@ -301,12 +270,12 @@ const Catering = () => {
 
               {/* Centered Location */}
               <div className="flex items-center justify-center space-x-4">
-                <MapPin className="h-6 w-6 text-your-orange" />
+                <MapPin className="h-6 w-6 text-your-wine-light" />
                 <a
                   href={siteConfig.mapsLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-700 hover:text-your-orange text-center font-medium text-lg"
+                  className="text-your-cream/80 hover:text-your-wine-light text-center font-medium text-lg"
                 >
                   {siteConfig.addressDisplay}
                 </a>
@@ -317,18 +286,18 @@ const Catering = () => {
             <section className="pt-12 pb-12 rounded-xl bg-your-orange overflow-hidden flex items-center justify-center h-full">
               <div className="relative z-10 max-w-xl mx-auto px-6 md:px-10 text-center space-y-4">
                 <h3 className="text-3xl font-display text-white font-bold">
-                  Get a Custom Quote
+                  Request a Proposal
                 </h3>
                 <p className="text-white text-lg font-semibold leading-relaxed">
-                Contact us today to discuss your catering needs and get a custom quote.
+                Tell us about your event and we will help shape the right menu and service plan.
                 </p>
                 <PulsatingButton
                   onClick={handleQuoteClick}
                   pulseColor="rgba(255,255,255,0.5)"
                   duration="4s"
-                  className="mx-auto block px-6 py-3 bg-white text-your-black font-semibold rounded-xl shadow-lg"
+                  className="mx-auto block px-6 py-3 bg-your-ivory text-your-cream font-semibold rounded-xl shadow-lg"
                 >
-                  Get a Quote
+                  Start an Enquiry
                 </PulsatingButton>
               </div>
             </section>

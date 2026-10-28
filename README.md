@@ -1,68 +1,69 @@
-# Restaurant site template (Next.js + Vercel)
+# The Dorset
 
-**Use this as a GitHub template:** see **[TEMPLATE.md](./TEMPLATE.md)** for the full checklist (env vars, content to replace, deploy).
+The Dorset is a responsive restaurant concept website for a seasonal New American restaurant in Greenwich Village, New York City. Its visual and editorial direction is rooted in local farms, Atlantic coastal ingredients, modern hospitality, and a black, cream, and deep-burgundy palette.
 
-**Demo / live example:** [restaurant-template-dfk.vercel.app](https://restaurant-template-dfk.vercel.app).
+This is a portfolio demonstration built by 邓钰鸣, not an operating restaurant or booking service. Planned live URL: [dorset.affogato.xin](https://dorset.affogato.xin).
 
----
+## Current pages
 
-Brand, contact, social, SEO, and JSON-LD are driven by **`NEXT_PUBLIC_*` environment variables** (see `.env.example`). After creating a new repo from the template, copy `.env.example` → `.env.local`, fill in your values, and mirror them in Vercel.
+- **Home** — brand introduction, farm-and-coast story, signature dishes, concept guest notes, location, and contact details
+- **Dinner Menu** — a text-led seasonal menu covering mezze, salads, starters, mains, sides, desserts, and cocktails
+- **About** — restaurant story, philosophy, team, gallery, and visit information
+- **Catering** — private-event information, media carousel, enquiries, and contact details
+- **Reservations** — a portfolio-safe reservation enquiry and contact flow without a fake ordering provider
 
-This codebase was originally built for **Desi Flavors Katy** (Indian street food in Katy, Texas). Fork it, change the env and content, and make it yours.
+## Technology
 
-If you are a developer: hi, thanks for reading. If you are here because someone dropped a GitHub link in your lap with zero explanation: also hi. The food is real, the truck is real, and the menu has opinions.
+- Next.js App Router
+- React and TypeScript
+- Tailwind CSS
+- Framer Motion
+- Netlify deployment with Deploy Previews
+- Netlify Forms for contact enquiries
 
-## What is actually on the site
+## Local development
 
-- **Home** - Photos, energy, and a reason to stay longer than five seconds  
-- **Menu** - Full spread with vegetarian flags, heat warnings, and the occasional item that will judge you if you order mild  
-- **About** - The story, the truck, the “why Katy?” energy  
-- **Catering** - For when your office or your cousin’s wedding needs trays, not tiny samples  
-- **Order** - Big friendly buttons that send people to Square and the delivery apps so nobody gets lost  
-
-We are not trying to win a minimalist yourgn award for an empty white page. We are trying to make you hungry and then hand you a link.
-
-## Stack, but make it quick
-
-Next.js (App Router), React, Tailwind, Framer Motion when a section needs a little drama, and Vercel for hosting. No separate “upload the `out/` folder” step-`git push` and let Vercel run `next build`. If you wanted a forty-bullet architecture doc, wrong README; this one believes in sunlight and garlic.
-
-## Run it on your machine
-
-You need Node.js. Then:
+Install dependencies and start the development server:
 
 ```bash
 npm install
 npm run dev
 ```
 
-Your terminal will nag you with a URL-usually `http://localhost:3000`. Open it. Hot reload will do its thing while you pretend you are not refreshing every twelve seconds.
+Open `http://localhost:3000`.
 
-Production build (same command Vercel runs):
+Run checks before deployment:
 
 ```bash
+npm run lint
 npm run build
 ```
 
-Optional: `npm start` after a build to smoke-test the production server locally.
+## Configuration
 
-## Secrets and env files
+Public brand, contact, address, hours, SEO, and structured-data values are configured through `NEXT_PUBLIC_*` environment variables. Copy `.env.example` to `.env.local`, then replace any placeholder social profiles and set the final production URL before deployment. Netlify environment-variable changes require a new deploy before they appear on the site.
 
-Copy `.env.example` to `.env.local` and add at least `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY` if you want maps to work locally. Optional: `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` for Search Console-see `GOOGLE_VERIFICATION_SETUP.md` if you are setting that up.
+The project intentionally uses `Reserve a Table` and `Contact Us` enquiry actions instead of pretending to connect to a live ordering provider.
 
-## Deploy
+## Content status
 
-**Vercel** is the happy path: push, build, done. Set `NEXT_PUBLIC_SITE_URL` to your production URL (and your custom domain when you add one) so Open Graph, `robots.txt`, and `sitemap.xml` stay correct.
+The home page and dinner menu follow The Dorset concept direction. The About and Catering pages are being transitioned from the original template media to restaurant-specific photography and final brand copy. Do not remove media still referenced by those pages until their replacements are connected.
 
-## Cool people disclaimer
+## Netlify deployment workflow
 
-Contributions and issues are welcome if you are fixing a bug or making the experience better for guests. Drive-by refactors that “simplify” the brand voice into corporate oatmeal will be read with the same suspicion as unsalted butter.
+Netlify detects this Next.js project and uses its maintained Next.js runtime. The committed `netlify.toml` runs `npm run build` and publishes the generated `.next` output.
+
+Use a preview-first workflow so routine development does not publish to the production domain:
+
+1. Create a feature branch instead of committing routine work directly to `main`.
+2. Open a pull request to receive a Netlify Deploy Preview URL.
+3. Review the preview, then batch approved work into a consolidated release.
+4. Merge to `main` only for the planned production releases, typically two to four times per month.
+
+After connecting the repository in Netlify, enable **Forms > Form detection** and redeploy. The contact component submits URL-encoded data to the static `public/__forms.html` skeleton so Netlify can register and process the form. A local Next.js server does not process that endpoint; verify successful and failed submissions on a Deploy Preview before production.
+
+Add the variables from `.env.example` in Netlify's environment-variable settings and set `NEXT_PUBLIC_SITE_URL` to the final domain so canonical URLs, social previews, the sitemap, and structured data use production addresses. Do not commit `.env.local`, `.netlify`, or credentials.
 
 ## License
 
-Released under the [MIT License](LICENSE). You can use this template for your own restaurant, client work, or learning-just keep the copyright and license notice in copies of the source you distribute. If you fork for a new brand, updating the copyright line in `LICENSE` for your own project is fine.
-
----
-
-**Order link** is configured with `NEXT_PUBLIC_ORDER_URL` (e.g. Square, Toast, or your ordering page).
-
-Built for people who like flavor, loud colors, and websites that admit they are selling food. Business questions? Hit the contact info on the live site. Code questions? Open an issue or bribe your friend with chaat.
+Released under the [MIT License](LICENSE).

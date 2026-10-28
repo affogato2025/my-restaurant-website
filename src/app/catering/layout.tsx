@@ -3,7 +3,7 @@ import { SITE_URL, siteConfig } from '@/config/site';
 
 export const metadata: Metadata = {
   title: `Catering Services - ${siteConfig.businessName}`,
-  description: `Professional catering by ${siteConfig.businessName}. Corporate events, weddings, and private parties.`,
+  description: `Seasonal New American catering by ${siteConfig.businessName}, inspired by local farms and the Atlantic coast.`,
   keywords: [
     'catering',
     'corporate catering',
@@ -16,10 +16,10 @@ export const metadata: Metadata = {
     description: `Catering services - ${siteConfig.description}`,
     images: [
       {
-        url: `${SITE_URL}/Truck/IMG-20250603-WA0005.jpg`,
-        width: 1200,
-        height: 630,
-        alt: `Catering - ${siteConfig.businessName}`,
+        url: `${SITE_URL}/Signature/atlantic-oysters.jpg`,
+        width: 1600,
+        height: 1067,
+        alt: `Seasonal catering by ${siteConfig.businessName}`,
       },
     ],
   },

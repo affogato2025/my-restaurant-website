@@ -1,26 +1,19 @@
-import { Instagram, Facebook, Twitter, Youtube, MapPin, Clock, Phone, Mail, ExternalLink } from 'lucide-react';
+import { Instagram, Github, MapPin, Clock, Phone, Mail, ExternalLink } from 'lucide-react';
 import ContactForm from '../contact/ContactForm';
 import { MotionDiv } from '../MotionDiv';
 import { motion } from 'framer-motion';
 import { siteConfig } from '@/config/site';
+import BusinessHours from '@/components/BusinessHours';
 
-const TikTokIcon = ({ className }: { className?: string }) => (
-  <svg className={className ?? 'w-6 h-6'} viewBox="0 0 24 24" fill="currentColor">
-    <path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
-  </svg>
-);
-
-const socialLinks = [
-  { platform: 'Instagram', icon: Instagram, url: siteConfig.social.instagram, color: 'hover:text-your-orange' },
-  { platform: 'Facebook', icon: Facebook, url: siteConfig.social.facebook, color: 'hover:text-your-orange' },
-  { platform: 'Twitter', icon: Twitter, url: siteConfig.social.x, color: 'hover:text-your-orange' },
-  { platform: 'TikTok', icon: TikTokIcon, url: siteConfig.social.tiktok, color: 'hover:text-your-orange' },
-  { platform: 'YouTube', icon: Youtube, url: siteConfig.social.youtube, color: 'hover:text-your-orange' },
+const developerLinks = [
+  { label: 'Developer GitHub', icon: Github, url: siteConfig.developer.github },
+  ...(siteConfig.developer.instagram ? [{ label: 'Personal Instagram', icon: Instagram, url: siteConfig.developer.instagram }] : []),
+  { label: 'View More Projects', icon: ExternalLink, url: siteConfig.developer.portfolio },
 ];
 
 const ConnectSection = () => {
   return (
-    <section id="connect" className="py-12 bg-your-black relative">
+    <section id="connect" className="py-16 bg-your-black text-your-cream relative border-y border-your-cream/10">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Left Grid - Content */}
@@ -29,10 +22,10 @@ const ConnectSection = () => {
               type="fadeIn"
               className="text-left"
             >
-              <h2 className="text-3xl md:text-4xl font-bold font-display text-white mb-4">
+              <h2 className="text-3xl md:text-4xl font-extrabold font-display text-your-cream mb-4">
                 Connect With Us
               </h2>
-              <p className="text-gray-300 max-w-2xl">
+              <p className="text-your-cream/80 max-w-2xl">
                 Have questions about our menu, catering services, or want to know where we'll be next? 
                 Reach out to us through any of the channels below.
               </p>
@@ -51,17 +44,17 @@ const ConnectSection = () => {
                 transition={{ duration: 0.5 }}
                 className="space-y-6"
               >
-                <h3 className="text-xl font-display font-bold mb-6 text-white">Contact Information</h3>
+                <h3 className="text-xl font-display font-extrabold mb-6 text-your-wine-light">Contact Information</h3>
                 
                 <div className="flex items-start gap-3">
-                  <MapPin className="w-5 h-5 text-your-orange mt-1 flex-shrink-0" />
+                  <MapPin className="w-5 h-5 text-your-wine-light mt-1 flex-shrink-0" />
                   <div>
-                    <p className="font-medium text-white">Location</p>
+                    <p className="font-bold text-your-cream">Location</p>
                     <a 
                       href={siteConfig.mapsLink} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="text-gray-300 hover:text-your-orange transition-colors flex items-center gap-1 group"
+                      className="text-your-cream/80 hover:text-your-wine-light transition-colors flex items-center gap-1 group"
                     >
                       <span>{siteConfig.addressDisplay}</span>
                       <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -70,14 +63,14 @@ const ConnectSection = () => {
                 </div>
                 
                 <div className="flex items-start gap-3">
-                  <Phone className="w-5 h-5 text-your-orange mt-1 flex-shrink-0" />
+                  <Phone className="w-5 h-5 text-your-wine-light mt-1 flex-shrink-0" />
                   <div>
-                    <p className="font-medium text-white">Phone</p>
+                    <p className="font-bold text-your-cream">Phone</p>
                     <a 
                       href={`https://wa.me/${siteConfig.whatsappDigits}`} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="text-gray-300 hover:text-your-orange transition-colors flex items-center gap-1 group"
+                      className="text-your-cream/80 hover:text-your-wine-light transition-colors flex items-center gap-1 group"
                     >
                       <span>{siteConfig.phoneDisplay}</span>
                       <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -86,12 +79,12 @@ const ConnectSection = () => {
                 </div>
                 
                 <div className="flex items-start gap-3">
-                  <Mail className="w-5 h-5 text-your-orange mt-1 flex-shrink-0" />
+                  <Mail className="w-5 h-5 text-your-wine-light mt-1 flex-shrink-0" />
                   <div>
-                    <p className="font-medium text-white">Email</p>
+                    <p className="font-bold text-your-cream">Email</p>
                     <a 
                       href={`mailto:${siteConfig.emailContact}`} 
-                      className="text-gray-300 hover:text-your-orange transition-colors flex items-center gap-1 group"
+                      className="text-your-cream/80 hover:text-your-wine-light transition-colors flex items-center gap-1 group"
                     >
                       <span>{siteConfig.emailContact}</span>
                       <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -100,35 +93,34 @@ const ConnectSection = () => {
                 </div>
                 
                 <div className="flex items-start gap-3">
-                  <Clock className="w-5 h-5 text-your-orange mt-1 flex-shrink-0" />
-                  <div>
-                    <p className="font-medium text-white">Hours</p>
-                    <p className="text-gray-300">{siteConfig.hoursLine1}: </p>
-                    <p className="text-gray-300">{siteConfig.hoursLine2}</p>
-                  </div>
+                  <Clock className="w-5 h-5 text-your-wine-light mt-1 flex-shrink-0" />
+                  <BusinessHours className="w-full max-w-md" />
                 </div>
               </motion.div>
 
-              {/* Social Media Links */}
+              {/* Developer portfolio links */}
               <div className="pt-8">
-                <h3 className="text-xl font-semibold text-white mb-6">Follow Us</h3>
-                <div className="flex flex-wrap gap-8">
-                  {socialLinks.map((social, index) => {
-                    const Icon = social.icon;
+                <h3 className="text-xl font-extrabold text-your-wine-light mb-2">About the Developer</h3>
+                <p className="text-your-cream/80 mb-6">Built by {siteConfig.developer.name}</p>
+                <div className="flex flex-wrap gap-x-8 gap-y-4">
+                  {developerLinks.map((link, index) => {
+                    const Icon = link.icon;
                     return (
                     <motion.a
-                      key={social.platform}
-                      href={social.url}
+                      key={link.label}
+                      href={link.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`text-white hover:text-your-orange transition-colors`}
+                      className="inline-flex items-center gap-2 text-your-cream hover:text-your-wine-light transition-colors"
+                      aria-label={link.label}
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.95 }}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1 }}
                     >
-                      <Icon className="w-6 h-6" />
+                      <Icon className="w-5 h-5" />
+                      <span>{link.label}</span>
                     </motion.a>
                     );
                   })}
