@@ -1,33 +1,34 @@
 'use client';
 import React, { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import Image from 'next/image';
 import { fadeInUp } from '@/utils/motion.variants';
 import { PulsatingButton } from '@/components/magicui/pulsating-button';
 import { Phone, Mail, MapPin } from 'lucide-react';
 import { siteConfig } from '@/config/site';
 
+const cateringMedia = [
+  { src: '/Venue/private-dining-guests.webp', alt: 'Guests gathered in a warmly lit private dining room' },
+  { src: '/Venue/candlelit-garden-table.webp', alt: 'An intimate candlelit table prepared for dinner' },
+  { src: '/Venue/garden-dining-room.webp', alt: 'A garden dining room set for a daytime gathering' },
+  { src: '/Venue/garden-cocktails.webp', alt: 'Cocktails served before a garden gathering' },
+  { src: '/Venue/interior-floral-detail.webp', alt: 'Seasonal floral details in a warm dining room' },
+  { src: '/Venue/dining-room-evening.webp', alt: 'A candlelit dining room prepared for the evening' },
+];
+
 const Catering = () => {
   const router = useRouter();
+  const shouldReduceMotion = useReducedMotion();
 
   const handleQuoteClick = () => {
     router.push('/#connect');
   };
 
-  // Carousel media and state
-  const media = [
-    { src: '/Venue/private-dining-guests.webp', alt: 'Guests gathered in a warmly lit private dining room' },
-    { src: '/Venue/candlelit-garden-table.png', alt: 'An intimate candlelit table prepared for dinner' },
-    { src: '/Venue/garden-dining-room.webp', alt: 'A garden dining room set for a daytime gathering' },
-    { src: '/Venue/garden-cocktails.webp', alt: 'Cocktails served before a garden gathering' },
-    { src: '/Venue/interior-floral-detail.png', alt: 'Seasonal floral details in a warm dining room' },
-    { src: '/Venue/dining-room-evening.webp', alt: 'A candlelit dining room prepared for the evening' },
-  ];
-
   // Preload all carousel images for smoother transitions
   useEffect(() => {
-    media.forEach(item => {
+    cateringMedia.forEach(item => {
       const img = new window.Image();
       img.src = item.src;
     });
@@ -36,7 +37,7 @@ const Catering = () => {
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(0);
   const [inView, setInView] = useState(false);
-  const sectionRef = useRef(null);
+  const sectionRef = useRef<HTMLElement | null>(null);
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => setInView(entry.isIntersecting),
@@ -46,20 +47,21 @@ const Catering = () => {
     return () => observer.disconnect();
   }, []);
   useEffect(() => {
-    let timeout;
-    timeout = setTimeout(() => {
+    if (!inView || shouldReduceMotion) return;
+
+    const timeout = window.setTimeout(() => {
       setDirection(1);
-      setCurrent((prev) => (prev + 1) % media.length);
+      setCurrent((prev) => (prev + 1) % cateringMedia.length);
     }, 4500);
-    return () => clearTimeout(timeout);
-  }, [current]);
+    return () => window.clearTimeout(timeout);
+  }, [current, inView, shouldReduceMotion]);
   const handlePrev = () => {
     setDirection(-1);
-    setCurrent((prev) => (prev - 1 + media.length) % media.length);
+    setCurrent((prev) => (prev - 1 + cateringMedia.length) % cateringMedia.length);
   };
   const handleNext = () => {
     setDirection(1);
-    setCurrent((prev) => (prev + 1) % media.length);
+    setCurrent((prev) => (prev + 1) % cateringMedia.length);
   };
 
   // Animation variants for staggering list items
@@ -85,8 +87,8 @@ const Catering = () => {
         <motion.div
           className="absolute inset-0 z-0 will-change-transform"
           initial={{ scale: 1, x: 0, y: 0 }}
-          animate={{ scale: 1.05, x: 20, y: -10 }}
-          transition={{ duration: 10, ease: 'easeInOut', repeat: Infinity, repeatType: 'reverse' }}
+          animate={shouldReduceMotion ? { scale: 1, x: 0, y: 0 } : { scale: 1.05, x: 20, y: -10 }}
+          transition={shouldReduceMotion ? { duration: 0 } : { duration: 10, ease: 'easeInOut', repeat: Infinity, repeatType: 'reverse' }}
         >
           <div className="absolute inset-0 bg-black/40 z-10"></div>
           <Image
@@ -114,7 +116,8 @@ const Catering = () => {
           <div className="w-full text-center">
             <motion.div
               variants={fadeInUp}
-              initial="hidden"
+              initial={shouldReduceMotion ? 'visible' : 'hidden'}
+              animate={shouldReduceMotion ? 'visible' : undefined}
               whileInView="visible"
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: 0.5 }}
@@ -130,7 +133,8 @@ const Catering = () => {
 
             <motion.p
               variants={fadeInUp}
-              initial="hidden"
+              initial={shouldReduceMotion ? 'visible' : 'hidden'}
+              animate={shouldReduceMotion ? 'visible' : undefined}
               whileInView="visible"
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: 0.8 }}
@@ -150,12 +154,7 @@ const Catering = () => {
           {/* Decorative background elements */}
           <div className="container mx-auto px-4 flex flex-col md:flex-row items-center gap-10 md:gap-16 max-w-6xl relative z-10">
             {/* Text Column */}
-            <motion.div
-              initial={{ opacity: 0, x: 40 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, type: 'spring' }}
-              className="w-full md:w-1/2 text-center md:text-left relative"
-            >
+            <div className="relative w-full min-w-0 max-w-full text-center md:w-1/2 md:text-left">
               <div className="absolute -left-10 -top-10 w-32 h-32 bg-gradient-to-br from-your-orange/15 via-your-orange/5 to-your-black/0 rounded-full blur-2xl opacity-60 -z-10" />
 
               <h3 className="text-3xl md:text-4xl font-display font-bold text-your-wine-light mb-4 drop-shadow-sm">
@@ -171,7 +170,7 @@ const Catering = () => {
 
               <motion.ul
                 variants={listContainer}
-                initial="hidden"
+                initial={shouldReduceMotion ? false : 'hidden'}
                 animate="visible"
                 className="list-disc pl-5 text-your-cream space-y-3 text-base md:text-lg font-medium"
               >
@@ -188,15 +187,15 @@ const Catering = () => {
                   Thoughtful planning and attentive service from the first conversation to the final course.
                 </motion.li>
               </motion.ul>
-            </motion.div>
+            </div>
             {/* Carousel Column */}
             <div className="w-full min-w-0 md:w-1/2 flex justify-center items-center relative">
               <div className="w-full max-w-[800px] h-[420px] sm:h-[520px] md:h-[600px] rounded-2xl overflow-hidden shadow-2xl bg-your-ivory flex items-center justify-center relative">
                 <AnimatePresence initial={false} custom={direction}>
-                  <motion.div key={current} custom={direction} initial={{ opacity: 0, x: direction > 0 ? 120 : -120 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: direction > 0 ? -120 : 120 }} transition={{ duration: 0.5, type: 'spring' }} className="absolute inset-0 flex items-center justify-center">
+                  <motion.div key={current} custom={direction} initial={shouldReduceMotion ? false : { opacity: 0, x: direction > 0 ? 120 : -120 }} animate={{ opacity: 1, x: 0 }} exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: direction > 0 ? -120 : 120 }} transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, type: 'spring' }} className="absolute inset-0 flex items-center justify-center">
                     <Image
-                      src={media[current].src}
-                      alt={media[current].alt}
+                      src={cateringMedia[current].src}
+                      alt={cateringMedia[current].alt}
                       fill
                       sizes="(min-width: 768px) 50vw, 100vw"
                       className="object-cover object-center transition-transform duration-500"
@@ -204,13 +203,16 @@ const Catering = () => {
                   </motion.div>
                 </AnimatePresence>
                 <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-4 z-20">
-                  <button onClick={handlePrev} aria-label="Previous" className="bg-your-ivory/90 hover:bg-your-orange text-your-wine-light hover:text-white rounded-full p-3 shadow transition-colors">
+                  <button type="button" onClick={handlePrev} aria-label="Previous catering image" className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full bg-your-ivory/90 p-3 text-your-wine-light shadow transition-colors hover:bg-your-orange hover:text-white focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-your-cream">
                     <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" /></svg>
                   </button>
-                  <button onClick={handleNext} aria-label="Next" className="bg-your-ivory/90 hover:bg-your-orange text-your-wine-light hover:text-white rounded-full p-3 shadow transition-colors">
+                  <button type="button" onClick={handleNext} aria-label="Next catering image" className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full bg-your-ivory/90 p-3 text-your-wine-light shadow transition-colors hover:bg-your-orange hover:text-white focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-your-cream">
                     <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" /></svg>
                   </button>
                 </div>
+                <p className="sr-only" aria-live="polite">
+                  Catering image {current + 1} of {cateringMedia.length}: {cateringMedia[current].alt}
+                </p>
               </div>
             </div>
           </div>
@@ -230,9 +232,9 @@ const Catering = () => {
 
           <p className="text-your-cream/70 text-lg font-medium max-w-3xl mx-auto">
             Fill out the{' '}
-            <a href="/#connect" className="text-your-wine-light underline hover:opacity-80 font-semibold">
+            <Link href="/#connect" className="text-your-wine-light underline hover:opacity-80 font-semibold">
               Connect With Us
-            </a>{' '}
+            </Link>{' '}
             form to begin your catering enquiry.
           </p>
         </section>

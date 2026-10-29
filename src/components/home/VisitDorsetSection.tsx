@@ -1,44 +1,28 @@
 import { MapPin } from 'lucide-react';
-import { motion, useScroll } from 'framer-motion';
-import { useRef, useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { useRef } from 'react';
 import { siteConfig } from '@/config/site';
 
-const VisitTruckSection = () => {
+const VisitDorsetSection = () => {
   const sectionRef = useRef(null);
-  const [hasAnimated, setHasAnimated] = useState(false);
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
-
-  useEffect(() => {
-    const timer = setTimeout(() => { setHasAnimated(true); }, 1000);
-    return () => clearTimeout(timer);
-  }, []);
 
   return (
     <section ref={sectionRef} className="pt-8 pb-16 md:pt-12 md:pb-20 lg:pt-16 lg:pb-24 bg-gradient-to-b from-transparent via-your-orange/5 to-your-black relative overflow-hidden">
       {/* Decorative elements with parallax */}
-      <motion.div
+      <div
         className="absolute top-0 left-0 w-24 h-24 bg-your-orange/5 rounded-full -translate-x-1/2 -translate-y-1/2"
-        style={{ y: scrollYProgress ? scrollYProgress.get() * 20 : 0 }}
       />
-      <motion.div
+      <div
         className="absolute bottom-0 right-0 w-48 h-48 bg-your-orange/5 rounded-full translate-x-1/3 translate-y-1/3"
-        style={{ y: scrollYProgress ? -scrollYProgress.get() * 20 : 0 }}
       />
-      <motion.div
+      <div
         className="absolute top-1/4 right-10 w-12 h-12 bg-your-orange/10 rounded-full"
-        style={{ y: scrollYProgress ? scrollYProgress.get() * 10 : 0 }}
       />
-      <motion.div
+      <div
         className="absolute left-10 bottom-20 w-3 h-3 rounded-full bg-your-orange/40"
-        animate={hasAnimated ? { y: 0, opacity: 0.6 } : { y: [0, -15, 0], opacity: [0.4, 0.8, 0.4] }}
-        transition={{ duration: 3, repeat: hasAnimated ? 0 : Infinity, ease: "easeInOut" }}
-        viewport={{ once: true }}
       />
-      <motion.div
+      <div
         className="absolute right-1/3 top-40 w-4 h-4 rounded-full bg-your-orange/30"
-        animate={hasAnimated ? { y: 0, opacity: 0.5 } : { y: [0, -20, 0], opacity: [0.3, 0.7, 0.3] }}
-        transition={{ duration: 4, repeat: hasAnimated ? 0 : Infinity, ease: "easeInOut", delay: 1 }}
-        viewport={{ once: true }}
       />
       {/* Decorative background accent */}
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-gradient-to-br from-your-orange/10 via-your-orange/5 to-your-black/0 blur-2xl opacity-40 z-0 pointer-events-none" />
@@ -92,4 +76,4 @@ const VisitTruckSection = () => {
   );
 };
 
-export default VisitTruckSection;
+export default VisitDorsetSection;

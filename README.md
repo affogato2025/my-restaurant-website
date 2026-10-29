@@ -21,23 +21,44 @@ This is a portfolio demonstration built by 邓钰鸣, not an operating restauran
 - Netlify deployment with Deploy Previews
 - Netlify Forms for contact enquiries
 
+## Features
+
+- Responsive navigation, menu layouts, venue galleries, and catering carousel
+- Portfolio-safe reservation and contact-enquiry flows rather than a simulated checkout
+- Keyboard-visible focus states, a skip link, semantic links/buttons, and reduced-motion support
+- Responsive images through `next/image` plus compressed WebP venue assets
+- SEO metadata, structured data, sitemap, web manifest, and social preview configuration
+- Clear concept labels for fictional guest notes and non-operating restaurant status
+
+## Screenshots
+
+### Home
+
+![The Dorset home page](docs/screenshots/home-desktop.webp)
+
+### Dinner menu
+
+![The Dorset dinner menu](docs/screenshots/menu-desktop.webp)
+
 ## Local development
 
 Install dependencies and start the development server:
 
 ```bash
+nvm use
 npm install
 npm run dev
 ```
 
 Open `http://localhost:3000`.
 
-Run checks before deployment:
+Run the same quality checks used before a preview deploy:
 
 ```bash
-npm run lint
-npm run build
+npm run check
 ```
+
+The project targets Node.js 20 locally and on Netlify. `npm run check` runs ESLint with the Next.js Core Web Vitals and React Hooks rules, TypeScript validation, and a production build.
 
 ## Configuration
 
@@ -45,9 +66,11 @@ Public brand, contact, address, hours, SEO, and structured-data values are confi
 
 The project intentionally uses `Reserve a Table` and `Contact Us` enquiry actions instead of pretending to connect to a live ordering provider.
 
-## Content status
+## Content and image status
 
-The home page and dinner menu follow The Dorset concept direction. The About and Catering pages are being transitioned from the original template media to restaurant-specific photography and final brand copy. Do not remove media still referenced by those pages until their replacements are connected.
+All pages follow The Dorset concept direction. Venue photographs are user-provided Palma references used only to demonstrate image selection, layout, and responsive presentation; they do not depict a real Dorset restaurant. Their provenance and usage boundary are documented in [`public/Venue/IMAGE_CREDITS.md`](public/Venue/IMAGE_CREDITS.md). Pexels food-photo credits are recorded in [`public/Signature/IMAGE_CREDITS.md`](public/Signature/IMAGE_CREDITS.md).
+
+Fictional guest notes are labelled directly on the page. The footer also states that this is a concept portfolio project rather than an operating restaurant.
 
 ## Netlify deployment workflow
 

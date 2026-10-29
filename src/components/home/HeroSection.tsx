@@ -1,7 +1,8 @@
 'use client';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ChevronDown, ChevronRight } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { useRef } from 'react';
 import { siteConfig } from '@/config/site';
 
@@ -13,6 +14,7 @@ const fadeSlide = {
 
 const HeroSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const shouldReduceMotion = useReducedMotion();
   
   // Subtle zoom and fade effect
   const scale = 1.12;
@@ -27,17 +29,20 @@ const HeroSection = () => {
       <motion.div
         className="absolute inset-0 z-0 will-change-transform"
         initial={{ scale: 1, x: 0, y: 0 }}
-        animate={{ scale: scale, x: 20, y: -10, opacity: opacity }}
-        transition={{ duration: 18, ease: 'easeInOut', repeat: Infinity, repeatType: 'reverse' }}
+        animate={shouldReduceMotion ? { scale: 1, x: 0, y: 0, opacity: 1 } : { scale, x: 20, y: -10, opacity }}
+        transition={shouldReduceMotion ? { duration: 0 } : { duration: 18, ease: 'easeInOut', repeat: Infinity, repeatType: 'reverse' }}
       >
         <div className="absolute inset-0 bg-black/40 z-10" />
         {/* Subtle pulsing overlay */}
         <div className="absolute inset-0 bg-your-black/5 animate-pulse-subtle pointer-events-none" />
-        <img
+        <Image
           src="/Signature/restaurant-at-dusk.jpg"
           alt=""
           aria-hidden="true"
-          className="object-cover w-full h-full absolute inset-0"
+          fill
+          sizes="100vw"
+          priority
+          className="object-cover"
         />
       </motion.div>
 
@@ -102,16 +107,19 @@ const HeroSection = () => {
       </div>
 
       {/* Scroll Indicator */}
-      <motion.div
+      <motion.button
+        type="button"
+        onClick={() => document.getElementById('farm-to-table')?.scrollIntoView({ behavior: shouldReduceMotion ? 'auto' : 'smooth' })}
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.2, duration: 0.7, ease: 'easeInOut' }}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10"
+        className="absolute bottom-8 left-1/2 z-10 inline-flex min-h-11 min-w-11 -translate-x-1/2 items-center justify-center rounded-full text-white/70 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+        aria-label="Scroll to the restaurant story"
       >
-        <motion.div animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 2 }} className="text-white/50 cursor-pointer hover:text-white/80 transition-colors">
-          <ChevronDown size={28} />
-        </motion.div>
-      </motion.div>
+        <motion.span animate={shouldReduceMotion ? undefined : { y: [0, 8, 0] }} transition={shouldReduceMotion ? undefined : { repeat: Infinity, duration: 2 }}>
+          <ChevronDown size={28} aria-hidden />
+        </motion.span>
+      </motion.button>
     </section>
   );
 };

@@ -5,7 +5,7 @@ import { CalendarDays, Mail } from 'lucide-react';
 import Link from 'next/link';
 import { siteConfig } from '@/config/site';
 
-export default function TrackOrderPage() {
+export default function ReservationsPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-your-black to-your-orange/10 flex items-center justify-center px-4">
       <motion.div

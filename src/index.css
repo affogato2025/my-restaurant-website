@@ -294,6 +294,22 @@
   z-index: 1000;
 }
 
+/* Stable reflow and keyboard focus across all page templates. */
+html,
+body {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+a[href^="mailto:"] {
+  overflow-wrap: anywhere;
+}
+
+:where(a[href], button, input, select, textarea):focus-visible {
+  outline: 3px solid #f0d8df;
+  outline-offset: 3px;
+}
+
 .skip-link:focus,
 .skip-link:active {
   left: 1rem;
@@ -399,6 +415,11 @@
 
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  /* Accessibility override: stop authored motion when the user requests it. */
   *,
   *::before,
   *::after {

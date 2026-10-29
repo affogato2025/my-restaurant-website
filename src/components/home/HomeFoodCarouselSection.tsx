@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import Image from 'next/image';
 import { motion, useReducedMotion } from 'framer-motion';
 
 export default function HomeFoodCarouselSection() {
@@ -22,8 +23,8 @@ export default function HomeFoodCarouselSection() {
 
   return (
     <section id="farm-to-table" className="relative w-full overflow-hidden bg-gradient-to-b from-transparent via-your-orange/5 to-your-black py-12 md:py-20">
-      <img src="/Ingredients/mint-removebg-preview.png" alt="" aria-hidden="true" className="pointer-events-none absolute left-8 top-8 z-0 h-[80px] w-[80px] select-none rotate-12 opacity-10" />
-      <img src="/Ingredients/cinamon-removebg-preview.png" alt="" aria-hidden="true" className="pointer-events-none absolute bottom-8 right-8 z-0 h-[90px] w-[90px] -rotate-12 select-none opacity-10" />
+      <Image src="/Ingredients/mint-removebg-preview.png" alt="" aria-hidden="true" width={80} height={80} className="pointer-events-none absolute left-8 top-8 z-0 select-none rotate-12 opacity-10" />
+      <Image src="/Ingredients/cinamon-removebg-preview.png" alt="" aria-hidden="true" width={90} height={90} className="pointer-events-none absolute bottom-8 right-8 z-0 select-none -rotate-12 opacity-10" />
       <svg aria-hidden="true" className="absolute right-1 top-1/4 z-0 h-40 w-40 opacity-10" viewBox="0 0 100 100" fill="none">
         <circle cx="50" cy="50" r="48" stroke="#691C32" strokeWidth="4" />
         <path d="M50 10 Q60 30 50 50 Q40 70 50 90" stroke="#691C32" strokeWidth="2" />

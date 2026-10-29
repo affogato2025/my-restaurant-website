@@ -93,7 +93,7 @@ const AboutPage = () => {
             <div className="order-1 md:order-2">
               <div className="relative">
                 <Image
-                  src="/Venue/interior-floral-detail.png"
+                  src="/Venue/interior-floral-detail.webp"
                   alt="Warm woodwork and seasonal flowers in an intimate dining room"
                   width={600}
                   height={750}
@@ -214,7 +214,7 @@ const AboutPage = () => {
             </div>
             <div className="md:w-1/2 relative">
               <Image
-                src="/Venue/chef-quality-focus.png"
+                src="/Venue/chef-quality-focus.webp"
                 alt="A chef carefully finishing a dish under the pass light"
                 width={600}
                 height={600}
@@ -305,7 +305,7 @@ const AboutPage = () => {
               </motion.div>
               <motion.div className="overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300" {...fadeInUpDelay(0.2)}>
                 <Image
-                  src="/Venue/interior-floral-detail.png"
+                  src="/Venue/interior-floral-detail.webp"
                   alt="Seasonal flowers and warm wood details"
                   width={400}
                   height={300}

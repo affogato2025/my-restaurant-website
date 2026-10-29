@@ -21,7 +21,7 @@
 - Menu: /menu
 - About: /about
 - Catering: /catering
-- Order tracking: /track
+- Reservation enquiry: /reservations
 
 ## Social
 

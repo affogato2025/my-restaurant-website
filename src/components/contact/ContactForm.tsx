@@ -1,7 +1,6 @@
-import { useState, Fragment } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Phone, User, MessageSquare, Check, AlertCircle, ArrowRight, Users, PartyPopper, ChevronDown, Download, HelpCircle } from 'lucide-react';
-import { logAnalyticsEvent } from '@/utils/loyaltyAndAnalytics';
 import { siteConfig } from '@/config/site';
 
 type ContactField = 'name' | 'email' | 'phone' | 'message';
@@ -54,11 +53,12 @@ const ContactForm = () => {
   };
 
   const recordContactFormSubmission = () => {
-    void logAnalyticsEvent('contact_form_submitted', {});
     if (typeof window !== 'undefined') {
       const analyticsWindow = window as Window & {
+        gtag?: (command: 'event', eventName: string) => void;
         umami?: { track?: (eventName: string) => void };
       };
+      analyticsWindow.gtag?.('event', 'contact_form_submitted');
       analyticsWindow.umami?.track?.('contact_form_submitted');
     }
   };
@@ -248,7 +248,6 @@ const ContactForm = () => {
                 className="w-full pl-10 pr-10 py-3 rounded-xl border border-your-cream/25 focus:border-your-wine-light focus:ring-2 focus:ring-your-wine-light/25 transition-all bg-your-black appearance-none cursor-pointer"
               >
                 {eventOptions.map((option) => {
-                  const Icon = option.icon;
                   return (
                     <option key={option.value} value={option.value}>
                       {option.label}

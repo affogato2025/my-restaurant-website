@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 import { motion, useReducedMotion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { useEffect, useRef } from 'react';
 import { fadeInUp } from '@/utils/motion.variants';
@@ -43,11 +44,14 @@ const MenuHeader = () => {
         className="absolute inset-0 z-0 will-change-transform"
         transition={{ type: 'spring', stiffness: 100, damping: 30 }}
       >
-        <img
+        <Image
           src="/Signature/dry-aged-strip.jpg"
           alt=""
           aria-hidden="true"
-          className="absolute inset-0 h-full w-full object-cover"
+          fill
+          sizes="100vw"
+          priority
+          className="object-cover"
         />
         <video
           ref={videoRef}
@@ -80,7 +84,8 @@ const MenuHeader = () => {
         <div className="w-full text-center">
           <motion.div
             variants={fadeInUp}
-            initial="hidden"
+            initial={shouldReduceMotion ? 'visible' : 'hidden'}
+            animate={shouldReduceMotion ? 'visible' : undefined}
             whileInView="visible"
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.5 }}

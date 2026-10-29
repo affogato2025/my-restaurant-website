@@ -46,9 +46,15 @@ const Footer = () => {
                 Join our newsletter for the latest updates and exclusive offers.
               </p>
               <form onSubmit={handleNewsletterSubmit} className="mt-2" noValidate>
-                <div className="relative w-64">
+                <label htmlFor="newsletter-email" className="sr-only">
+                  Email address
+                </label>
+                <div className="relative w-full max-w-64">
                   <input
+                    id="newsletter-email"
+                    name="email"
                     type="email"
+                    autoComplete="email"
                     placeholder="Enter your email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -59,7 +65,7 @@ const Footer = () => {
                     type="submit"
                     disabled={isSubscribing}
                     aria-label="Subscribe by email"
-                    className="absolute inset-y-0 right-2 min-h-11 min-w-11 flex items-center justify-center text-your-cream/80 hover:text-your-wine-light focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="absolute inset-y-0 right-2 min-h-11 min-w-11 flex items-center justify-center rounded-lg text-your-cream/80 hover:text-your-wine-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-your-wine-light disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {isSubscribing ? (
                       <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-your-wine-light"></div>
@@ -168,9 +174,12 @@ const Footer = () => {
             </h2>
           </Link>
         </div>
-        <div className="border-t border-your-cream/15 mt-1 pt-3 pb-4 flex flex-col md:flex-row justify-between items-center text-your-cream/60 text-sm">
-          <p className="mb-1 md:mb-0">Built by <a href={siteConfig.developer.github} target="_blank" rel="noopener noreferrer" className="text-your-wine-light hover:text-your-cream transition-colors">{siteConfig.developer.name}</a></p>
-          <p>© {currentYear} {siteConfig.businessName}. All rights reserved.</p>
+        <div className="border-t border-your-cream/15 mt-1 pt-3 pb-4 text-center text-your-cream/60 text-sm">
+          <p className="mb-3 font-semibold text-your-cream/75">Concept portfolio project — not an operating restaurant.</p>
+          <div className="flex flex-col items-center justify-between gap-2 md:flex-row">
+            <p>Built by <a href={siteConfig.developer.github} target="_blank" rel="noopener noreferrer" className="text-your-wine-light hover:text-your-cream transition-colors">{siteConfig.developer.name}</a></p>
+            <p>© {currentYear} {siteConfig.businessName}. Portfolio demonstration.</p>
+          </div>
         </div>
       </div>
     </footer>;

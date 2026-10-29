@@ -38,10 +38,10 @@ const CustomerReviewsSection = () => {
           className="mb-12 text-center md:mb-16"
         >
           <p className="mb-4 text-xs font-bold uppercase tracking-[0.28em] text-your-wine-light">
-            The Dorset experience
+            Concept experience
           </p>
           <h2 className="mb-5 text-3xl font-bold text-your-cream md:text-4xl">
-            Guest Notes
+            Concept Guest Notes
           </h2>
           <p className="mx-auto max-w-2xl text-base font-medium leading-relaxed text-your-cream/70 md:text-lg">
             Sample testimonials for this personal concept site, reflecting the seasonal New American dinner,
