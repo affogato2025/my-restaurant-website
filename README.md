@@ -2,7 +2,7 @@
 
 The Dorset is a responsive restaurant concept website for a seasonal New American restaurant in Greenwich Village, New York City. Its visual and editorial direction is rooted in local farms, Atlantic coastal ingredients, modern hospitality, and a black, cream, and deep-burgundy palette.
 
-This is a portfolio demonstration built by 邓钰鸣, not an operating restaurant or booking service. Planned live URL: [dorset.affogato.xin](https://dorset.affogato.xin).
+This is a portfolio demonstration built by 邓钰鸣, not an operating restaurant or booking service. **Live Demo:** [dorset.affogato.xin](https://dorset.affogato.xin).
 
 ## Current pages
 
