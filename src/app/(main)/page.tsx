@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import HeroSection from '@/components/home/HeroSection';
 import BestsellersSection from '@/components/home/BestsellersSection';
@@ -9,10 +9,11 @@ import HomeFoodCarouselSection from '@/components/home/HomeFoodCarouselSection';
 const QualityCommitmentSection = dynamic(() => import('@/components/home/QualityCommitmentSection'));
 const CustomerReviewsSection = dynamic(() => import('@/components/home/CustomerReviewsSection'));
 const ConnectSection = dynamic(() => import('@/components/home/ConnectSection'));
-const VisitTruckSection = dynamic(() => import('@/components/home/VisitTruckSection'));
+const VisitDorsetSection = dynamic(() => import('@/components/home/VisitDorsetSection'));
 
 const Index = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
   
   // Reset scroll position and handle scroll events
   useEffect(() => {
@@ -41,10 +42,11 @@ const Index = () => {
           y: isScrolled ? 0 : 20
         }}
         transition={{ duration: 0.3 }}
-        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        className="fixed bottom-8 right-8 bg-your-orange text-white p-3 rounded-full shadow-lg 
-          hover:bg-your-orange/90 transition-colors z-50"
+        onClick={() => window.scrollTo({ top: 0, behavior: shouldReduceMotion ? 'auto' : 'smooth' })}
+        className={`fixed bottom-20 right-4 z-40 inline-flex min-h-11 min-w-11 items-center justify-center rounded-full bg-your-orange p-3 text-white shadow-lg transition-colors hover:bg-your-orange/90 focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-your-cream sm:bottom-24 sm:right-8 ${isScrolled ? 'pointer-events-auto' : 'pointer-events-none'}`}
         aria-label="Back to top"
+        aria-hidden={!isScrolled}
+        tabIndex={isScrolled ? 0 : -1}
       >
         <svg 
           className="w-6 h-6" 
@@ -68,11 +70,11 @@ const Index = () => {
         <BestsellersSection />
         <QualityCommitmentSection />
         <CustomerReviewsSection />
-        <VisitTruckSection />
+        <VisitDorsetSection />
         <ConnectSection />
       </div>
     </main>
   );
 };
 
-export default Index; 
+export default Index;

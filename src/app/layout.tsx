@@ -1,7 +1,7 @@
 import './globals.css';
 import '../index.css';
 import type { Metadata, Viewport } from 'next';
-import { inter, merriweather } from './fonts';
+import { inter, nunito } from './fonts';
 import LayoutClientWrapper from '@/components/LayoutClientWrapper';
 import { SITE_URL, siteConfig } from '@/config/site';
 import { getStructuredDataGraph } from '@/config/structuredData';
@@ -43,16 +43,16 @@ export const metadata: Metadata = {
     locale: 'en_US',
     images: [
       {
-        url: `${SITE_URL}/Truck/truck-4.jpg`,
-        width: 1200,
-        height: 630,
-        alt: `${siteConfig.businessName} - food`,
+        url: `${SITE_URL}/Signature/dry-aged-strip.jpg`,
+        width: 1600,
+        height: 1067,
+        alt: `Dry-aged New York strip at ${siteConfig.businessName}`,
       },
       {
-        url: `${SITE_URL}/Food/foodtable.webp`,
-        width: 1200,
-        height: 630,
-        alt: `Menu and food at ${siteConfig.businessName}`,
+        url: `${SITE_URL}/Signature/atlantic-oysters.jpg`,
+        width: 1600,
+        height: 1067,
+        alt: `Atlantic oysters at ${siteConfig.businessName}`,
       },
     ],
   },
@@ -60,7 +60,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: `${siteConfig.businessName} | ${siteConfig.titleSuffix}`,
     description: siteConfig.description,
-    images: [`${SITE_URL}/Truck/truck-4.jpg`],
+    images: [`${SITE_URL}/Signature/dry-aged-strip.jpg`],
     creator: siteConfig.twitterCreator,
   },
   robots: {
@@ -77,8 +77,12 @@ export const metadata: Metadata = {
   other: {
     'geo.region': siteConfig.geoRegionMeta,
     'geo.placename': siteConfig.geoPlacename,
-    'geo.position': `${siteConfig.latitude};${siteConfig.longitude}`,
-    ICBM: `${siteConfig.latitude}, ${siteConfig.longitude}`,
+    ...(siteConfig.latitude && siteConfig.longitude
+      ? {
+          'geo.position': `${siteConfig.latitude};${siteConfig.longitude}`,
+          ICBM: `${siteConfig.latitude}, ${siteConfig.longitude}`,
+        }
+      : {}),
   },
   ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
     ? {
@@ -91,21 +95,25 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${merriweather.variable}`}>
+    <html lang="en" className={`${inter.variable} ${nunito.variable}`}>
       <head>
         <link rel="alternate" type="text/plain" title="LLM context" href="/llms.txt" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredDataGraph) }}
         />
-        <script
-          src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places&v=beta&loading=async`}
-          async
-        />
-        <script
-          src="https://unpkg.com/@googlemaps/places-autocomplete-element@latest/dist/index.min.js"
-          async
-        />
+        {siteConfig.googleMapsApiKey && (
+          <>
+            <script
+              src={`https://maps.googleapis.com/maps/api/js?key=${siteConfig.googleMapsApiKey}&libraries=places&v=beta&loading=async`}
+              async
+            />
+            <script
+              src="https://unpkg.com/@googlemaps/places-autocomplete-element@latest/dist/index.min.js"
+              async
+            />
+          </>
+        )}
       </head>
       <body>
         <a

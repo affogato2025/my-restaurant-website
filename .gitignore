@@ -31,6 +31,13 @@ dist-ssr
 # Next.js / tooling
 .next/
 out/
+.netlify/
+.agents/
+*.tsbuildinfo
+premium-audit.json
+
+# Local source media kept outside the deployed public assets
+/background1.mp4
 
 .cursor/
 mcp.json

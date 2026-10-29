@@ -2,7 +2,11 @@ import { SITE_URL, siteConfig, sameAsSocial } from '@/config/site';
 
 function googleMapsSearchUrl(): string {
   const q = encodeURIComponent(
-    `${siteConfig.addressLine}, ${siteConfig.addressCity}, ${siteConfig.addressRegion} ${siteConfig.addressPostal}`,
+    [
+      siteConfig.addressLine,
+      siteConfig.addressCity,
+      [siteConfig.addressRegion, siteConfig.addressPostal].filter(Boolean).join(' '),
+    ].filter(Boolean).join(', '),
   );
   return `https://www.google.com/maps/search/?api=1&query=${q}`;
 }
@@ -14,25 +18,20 @@ export function getStructuredDataGraph() {
     name: siteConfig.businessName,
     description: siteConfig.description,
     image: [
-      `${SITE_URL}/Truck/truck-4.jpg`,
-      `${SITE_URL}/Truck/truck-3.jpg`,
-      `${SITE_URL}/Food/foodtable.webp`,
+      `${SITE_URL}/Signature/restaurant-at-dusk.jpg`,
+      `${SITE_URL}/Signature/dry-aged-strip.jpg`,
+      `${SITE_URL}/Signature/atlantic-oysters.jpg`,
     ],
     url: SITE_URL,
     telephone: siteConfig.phoneE164,
     email: siteConfig.emailContact,
     address: {
       '@type': 'PostalAddress',
-      streetAddress: siteConfig.addressLine,
+      ...(siteConfig.addressLine ? { streetAddress: siteConfig.addressLine } : {}),
       addressLocality: siteConfig.addressCity,
       addressRegion: siteConfig.addressRegion,
-      postalCode: siteConfig.addressPostal,
+      ...(siteConfig.addressPostal ? { postalCode: siteConfig.addressPostal } : {}),
       addressCountry: siteConfig.addressCountry,
-    },
-    geo: {
-      '@type': 'GeoCoordinates',
-      latitude: siteConfig.latitude,
-      longitude: siteConfig.longitude,
     },
     areaServed: [
       {
@@ -46,15 +45,26 @@ export function getStructuredDataGraph() {
       },
     ],
     hasMap: googleMapsSearchUrl(),
-    openingHours: [siteConfig.openingHoursSchema],
     servesCuisine: siteConfig.servesCuisine,
-    priceRange: '$$',
+    priceRange: '$$$',
     paymentAccepted: siteConfig.paymentAccepted,
     hasMenu: `${SITE_URL}/menu`,
     acceptsReservations: false,
     currenciesAccepted: 'USD',
     sameAs: sameAsSocial,
   };
+
+  if (siteConfig.latitude && siteConfig.longitude) {
+    restaurant.geo = {
+      '@type': 'GeoCoordinates',
+      latitude: Number.parseFloat(siteConfig.latitude),
+      longitude: Number.parseFloat(siteConfig.longitude),
+    };
+  }
+
+  if (siteConfig.openingHoursSchema) {
+    restaurant.openingHours = siteConfig.openingHoursSchema;
+  }
 
   if (siteConfig.schemaRatingValue && siteConfig.schemaReviewCount) {
     restaurant.aggregateRating = {

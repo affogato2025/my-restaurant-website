@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import type { TargetAndTransition } from 'framer-motion';
 
 // Define supported animation types
 export type MotionDivType = 'fadeIn' | 'slideUp' | 'slideIn';
@@ -14,7 +15,7 @@ export interface MotionDivProps {
   type?: MotionDivType;
 }
 
-const animationVariants: Record<MotionDivType, { initial: any; animate: any; transition: { duration: number } }> = {
+const animationVariants: Record<MotionDivType, { initial: TargetAndTransition; animate: TargetAndTransition; transition: { duration: number } }> = {
   fadeIn: {
     initial: { opacity: 0 },
     animate: { opacity: 1 },
@@ -48,4 +49,4 @@ export const MotionDiv: React.FC<MotionDivProps> = ({
   >
     {children}
   </motion.div>
-); 
+);

@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import { ChevronRight, Star } from 'lucide-react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { ChevronRight } from 'lucide-react';
+import { motion, useScroll } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
 import BestsellerCard from '@/components/BestsellerCard';
 import { SpinningText } from '@/components/magicui/spinning-text';
@@ -25,38 +25,34 @@ const BestsellersSection = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  // Sample bestsellers data with itemIds
+  // Representative licensed photography; source details live in public/Signature/IMAGE_CREDITS.md.
   const bestsellers = [{
-    id: 1, // Chicken Biryani
-    title: 'Chicken Dum Biryani',
-    description: 'Fragrant basmati rice cooked with tender chicken, aromatic spices, and herbs.',
-    price: '$11.99',
-    imageSrc: '/Menu_Images/chicken-dum-biryani.jpg',
-    isSpecial: true,
-    itemId: 1, // Chicken Dum Biryani
-    isBold: true
+    id: 1,
+    title: 'Dry-Aged New York Strip',
+    description: 'Local grass-fed beef, roasted roots and red wine jus.',
+    price: '$42',
+    imageSrc: '/Signature/dry-aged-strip.jpg',
+    category: 'From the farm'
   }, {
-    id: 3, // Butter Chicken
-    title: 'Butter Chicken',
-    description: 'Tender chicken pieces in a creamy, tomato-based curry with a hint of butter.',
-    price: '$11.99',
-    imageSrc: '/Menu_Images/butter-chicken.jpg',
-    itemId: 8, // Butter Chicken
-    isBold: true
+    id: 2,
+    title: 'Half-Dozen Atlantic Oysters',
+    description: 'Fresh Atlantic oysters with house mignonette and cocktail sauce.',
+    price: '$22',
+    imageSrc: '/Signature/atlantic-oysters.jpg',
+    category: 'From the coast'
   }, {
-    id: 12, // Aloo Samosa
-    title: 'Aloo Samosa',
-    description: 'Crispy pastry triangles filled with spiced potatoes, peas, and vegetables.',
-    price: '$4.99',
-    imageSrc: '/Menu_Images/aloo-samosa.jpeg',
-    itemId: 24, // Aloo Samosa
-    isBold: true
+    id: 3,
+    title: 'Jurassic Coast Gin Fizz',
+    description: 'London dry gin, sea salt, lemon and a soft botanical finish.',
+    price: '$16',
+    imageSrc: '/Signature/jurassic-gin-fizz.jpg',
+    category: 'From the cellar'
   }];
 
   return (
     <section 
       ref={sectionRef}
-      className="pt-8 pb-16 md:pt-12 md:pb-20 lg:pt-16 lg:pb-24 bg-gradient-to-b from-transparent via-orange-50 to-white relative overflow-hidden"
+      className="relative overflow-hidden bg-gradient-to-b from-transparent via-your-burgundy/5 to-your-black pb-16 pt-8 md:pb-20 md:pt-12 lg:pb-24 lg:pt-16"
     >
       {/* Decorative elements with parallax */}
       <motion.div 
@@ -118,7 +114,7 @@ const BestsellersSection = () => {
             transition={{ duration: 0.7 }}
             className="text-center mb-12 md:mb-16"
           >
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 font-display leading-tight">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-your-cream font-display leading-tight">
               <motion.span
                 variants={fadeInUp}
                 initial="hidden"
@@ -127,7 +123,7 @@ const BestsellersSection = () => {
                 viewport={{ once: true }}
                 className="block mb-2"
               >
-                Our Bestsellers
+                The Dorset Signatures
               </motion.span>
             </h2>
             <motion.p 
@@ -136,10 +132,10 @@ const BestsellersSection = () => {
               whileInView="visible"
               transition={{ delay: 0.7, duration: 0.5 }}
               viewport={{ once: true }}
-              className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto mt-4 leading-relaxed"
+              className="text-base md:text-lg text-your-cream/70 max-w-2xl mx-auto mt-4 leading-relaxed"
             >
-              Try our crowd favorites, featuring our signature biryanis and flavorful curries 
-              that have made us a local favorite.
+              Three expressions of our kitchen: pasture-raised ingredients, pristine Atlantic seafood
+              and cocktails shaped by herbs, citrus and the coast.
             </motion.p>
           </motion.div>
 
@@ -153,17 +149,17 @@ const BestsellersSection = () => {
             className="mt-8 md:mt-4"
           >
             <AnimatedCardGrid columns={{ sm: 1, md: 3, lg: 3 }} gap={8} staggerDelay={0.15}>
-              {bestsellers.map((item, index) => (
-                <AnimatedCard key={index}>
+              {bestsellers.map((item) => (
+                <AnimatedCard key={item.id}>
                   <motion.div
-                    whileHover={{ scale: 1.04, boxShadow: '0 4px 32px #ffb34733' }}
+                    whileHover={{ scale: 1.02, boxShadow: '0 16px 48px rgba(105, 28, 50, 0.28)' }}
                     transition={{ type: 'spring', stiffness: 200 }}
                   >
-                    <div className="rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl hover:scale-[1.03] transition-all duration-300 bg-white">
+                    <div className="overflow-hidden rounded-xl border border-your-cream/15 bg-your-ivory shadow-lg transition-all duration-300 hover:border-your-wine-light/40 hover:shadow-2xl">
                       <div className="p-0">
                         <div className="relative">
-                          <SpinningText className="text-your-orange bg-transparent text-[0.6rem]">
-                            bestseller • bestseller • bestseller •
+                          <SpinningText className="text-your-wine-light bg-transparent text-[0.6rem]">
+                            farm • coast • cellar • farm • coast • cellar •
                           </SpinningText>
                           <BestsellerCard {...item} />
                         </div>
@@ -186,7 +182,7 @@ const BestsellersSection = () => {
           >
             <Link
               href="/menu"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-your-orange hover:bg-your-orange/90 text-white rounded-full font-medium transition-all shadow-sm hover:shadow-md transform hover:-translate-y-0.5 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-your-orange"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-your-orange hover:bg-your-orange/90 text-white rounded-full font-medium transition-all shadow-sm hover:shadow-md transform hover:-translate-y-0.5 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-your-wine-light"
             >
               View Full Menu
               <ChevronRight size={18} className="shrink-0 text-white" aria-hidden />

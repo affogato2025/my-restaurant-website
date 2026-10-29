@@ -1,4 +1,4 @@
-import { Truck, Clock, MapPin, Star, Utensils, Tag, Quote, Calendar, Users, PartyPopper, ChefHat } from 'lucide-react';
+import { Calendar, Users, PartyPopper, ChefHat } from 'lucide-react';
 import { motion, useScroll } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
 
@@ -14,29 +14,29 @@ const CateringAndEvents = () => {
 
   const services = [
     {
-      icon: <Calendar className="w-8 h-8 text-your-orange" />,
-      title: "Private Events",
-      description: "Make your special occasions memorable with our authentic Indian cuisine. Perfect for birthdays, anniversaries, and corporate events."
+      icon: <Calendar className="w-8 h-8 text-your-wine-light" />,
+      title: "Private Dining",
+      description: "Gather around a seasonal menu shaped by local farms, Atlantic seafood and the pace of your occasion."
     },
     {
-      icon: <Users className="w-8 h-8 text-your-orange" />,
-      title: "Corporate Catering",
-      description: "Impress your clients and employees with our professional catering services. Customizable menus for meetings and office parties."
+      icon: <Users className="w-8 h-8 text-your-wine-light" />,
+      title: "Corporate Events",
+      description: "Host clients and teams with polished service, flexible formats and a menu built for the room."
     },
     {
-      icon: <PartyPopper className="w-8 h-8 text-your-orange" />,
-      title: "Festival Catering",
-      description: "Celebrate cultural festivals with our traditional Indian dishes. Special menus available for Diwali, Holi, and other celebrations."
+      icon: <PartyPopper className="w-8 h-8 text-your-wine-light" />,
+      title: "Celebrations",
+      description: "Mark birthdays, anniversaries and milestones with warm hospitality and thoughtful seasonal cooking."
     },
     {
-      icon: <ChefHat className="w-8 h-8 text-your-orange" />,
-      title: "Custom Menus",
-      description: "Tailored menus to suit your event's theme and dietary requirements. Vegetarian, vegan, and gluten-free options available."
+      icon: <ChefHat className="w-8 h-8 text-your-wine-light" />,
+      title: "Bespoke Menus",
+      description: "Work with our kitchen on a menu tailored to your event, including vegetarian, vegan and gluten-free choices."
     }
   ];
 
   return (
-    <section ref={sectionRef} className="pt-8 pb-16 md:pt-12 md:pb-20 lg:pt-16 lg:pb-24 bg-gradient-to-b from-transparent via-orange-50 to-white relative overflow-hidden">
+    <section ref={sectionRef} className="pt-8 pb-16 md:pt-12 md:pb-20 lg:pt-16 lg:pb-24 bg-gradient-to-b from-transparent via-your-orange/5 to-your-black relative overflow-hidden">
       {/* Decorative elements with parallax */}
       <motion.div 
         className="absolute top-0 left-0 w-24 h-24 bg-your-orange/5 rounded-full -translate-x-1/2 -translate-y-1/2"
@@ -71,12 +71,12 @@ const CateringAndEvents = () => {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-your-black">
+          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-your-cream">
             Catering & Events
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Bring the authentic taste of India to your next event. Our food truck is available for private parties, 
-            corporate events, and special celebrations.
+          <p className="text-your-cream/70 max-w-2xl mx-auto">
+            From intimate dinners to full-room celebrations, The Dorset brings seasonal New American cooking
+            and attentive service to every gathering.
           </p>
         </motion.div>
 
@@ -88,15 +88,15 @@ const CateringAndEvents = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="bg-white p-4 md:p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300"
+              className="bg-your-ivory border border-your-cream/15 p-4 md:p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300"
             >
               <div className="flex justify-center mb-2 md:mb-4">
                 {service.icon}
               </div>
-              <h3 className="text-lg md:text-xl font-display font-semibold mb-1 md:mb-2 text-center text-your-black">
+              <h3 className="text-lg md:text-xl font-display font-semibold mb-1 md:mb-2 text-center text-your-cream">
                 {service.title}
               </h3>
-              <p className="text-sm md:text-base text-gray-600 text-center">
+              <p className="text-sm md:text-base text-your-cream/70 text-center">
                 {service.description}
               </p>
             </motion.div>

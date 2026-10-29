@@ -1,0 +1,10 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Netlify automatically installs its current Next.js runtime during builds.
+# Keep production on the main branch; use PR Deploy Previews for review and
+# merge only consolidated releases to main.

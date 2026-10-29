@@ -1,11 +1,13 @@
 'use client';
-import Link from 'next/link';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
-import { useRef } from 'react';
+import Image from 'next/image';
+import { motion, useReducedMotion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { useEffect, useRef } from 'react';
 import { fadeInUp } from '@/utils/motion.variants';
 
 const MenuHeader = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const shouldReduceMotion = useReducedMotion();
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -17,6 +19,21 @@ const MenuHeader = () => {
   const scale = useTransform(springProgress, [0, 1], [1, 1.15]);
   const opacity = useTransform(springProgress, [0, 1], [1, 0.7]);
 
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (shouldReduceMotion) {
+      video.pause();
+      video.currentTime = 0;
+      return;
+    }
+
+    void video.play().catch(() => {
+      // The poster image remains visible if the browser blocks autoplay.
+    });
+  }, [shouldReduceMotion]);
+
   return (
     <section
       ref={containerRef}
@@ -27,13 +44,29 @@ const MenuHeader = () => {
         className="absolute inset-0 z-0 will-change-transform"
         transition={{ type: 'spring', stiffness: 100, damping: 30 }}
       >
-        <div className="absolute inset-0 bg-black/40 z-10"></div>
-        <img
-          src="/Food/foodtable.webp"
-          alt="your Flavors Food Table"
-          className="transform-gpu object-cover absolute inset-0 w-full h-full"
-          style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+        <Image
+          src="/Signature/dry-aged-strip.jpg"
+          alt=""
+          aria-hidden="true"
+          fill
+          sizes="100vw"
+          priority
+          className="object-cover"
         />
+        <video
+          ref={videoRef}
+          autoPlay={!shouldReduceMotion}
+          muted
+          loop
+          playsInline
+          preload={shouldReduceMotion ? 'none' : 'metadata'}
+          poster="/Signature/dry-aged-strip.jpg"
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 h-full w-full select-none object-cover object-center motion-reduce:hidden"
+        >
+          <source src="/videos/menu-background.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 z-10 bg-black/45"></div>
       </motion.div>
 
       <div className="absolute inset-0 z-[1] opacity-10">
@@ -51,15 +84,19 @@ const MenuHeader = () => {
         <div className="w-full text-center">
           <motion.div
             variants={fadeInUp}
-            initial="hidden"
+            initial={shouldReduceMotion ? 'visible' : 'hidden'}
+            animate={shouldReduceMotion ? 'visible' : undefined}
             whileInView="visible"
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.5 }}
             className="mb-6 md:mb-8"
           >
-            <h1 className="text-4xl md:text-4xl lg:text-7xl font-display font-bold tracking-tight leading-tight">
-              <span className="text-white block">Explore Our Menu</span>
+            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold uppercase tracking-[0.12em] leading-tight">
+              <span className="text-white block">Dinner Menu</span>
             </h1>
+            <p className="mx-auto mt-5 max-w-2xl text-base font-bold tracking-wide text-white/80 sm:text-lg">
+              New American rooted in farm and coastal inspiration.
+            </p>
           </motion.div>
 
                     

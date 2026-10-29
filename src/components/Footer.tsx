@@ -1,46 +1,31 @@
 'use client';
 import Link from 'next/link';
-import { Facebook, Instagram, Youtube, Mail, MapPin, Clock, Send } from 'lucide-react';
+import { Github, Instagram, ExternalLink, Mail, MapPin, Clock, Send } from 'lucide-react';
 import { useState } from 'react';
 import { siteConfig } from '@/config/site';
-
-// Custom X icon component
-const XIcon = ({ size = 20 }: { size?: number }) => (
-  <svg 
-    xmlns="http://www.w3.org/2000/svg" 
-    width={size} 
-    height={size} 
-    viewBox="0 0 24 24" 
-    fill="none" 
-    stroke="currentColor" 
-    strokeWidth="2" 
-    strokeLinecap="round" 
-    strokeLinejoin="round"
-  >
-    <path d="M4 4l11.733 16h4.267l-11.733 -16z" />
-    <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" />
-  </svg>
-);
+import BusinessHours from '@/components/BusinessHours';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const [email, setEmail] = useState('');
   const [isSubscribing, setIsSubscribing] = useState(false);
+  const [newsletterMessage, setNewsletterMessage] = useState('');
 
   const handleNewsletterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!email.trim()) {
-      alert('Please enter your email address');
+      setNewsletterMessage('Please enter your email address.');
       return;
     }
 
-    if (!email.includes('@')) {
-      alert('Please enter a valid email address');
+    if (!/^\S+@\S+\.\S+$/.test(email.trim())) {
+      setNewsletterMessage('Please enter a valid email address.');
       return;
     }
 
     setIsSubscribing(true);
+    setNewsletterMessage('Opening your email app. Send the prepared email to complete your subscription.');
 
     // Open email client with newsletter subscription request
     const subject = encodeURIComponent('Newsletter Subscription Request');
@@ -49,65 +34,74 @@ const Footer = () => {
     
     setEmail(''); // Clear the input
     setIsSubscribing(false);
-    alert('Opening your email client. Please send the email to complete your subscription!');
   };
 
-  return <footer className="bg-your-black text-white pt-12 pb-2">
+  return <footer className="bg-your-black text-your-cream pt-12 pb-2 border-t border-your-cream/10">
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           {/* Logo and Description */}
           <div className="space-y-4">
             <div className="max-w-xs space-y-2">
-              <p className="text-gray-300">
+              <p className="text-your-cream/80">
                 Join our newsletter for the latest updates and exclusive offers.
               </p>
-              <form onSubmit={handleNewsletterSubmit} className="mt-2">
-                <div className="relative w-64">
+              <form onSubmit={handleNewsletterSubmit} className="mt-2" noValidate>
+                <label htmlFor="newsletter-email" className="sr-only">
+                  Email address
+                </label>
+                <div className="relative w-full max-w-64">
                   <input
+                    id="newsletter-email"
+                    name="email"
                     type="email"
+                    autoComplete="email"
                     placeholder="Enter your email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     disabled={isSubscribing}
-                    className="w-full px-4 py-2 pr-12 bg-transparent border border-white-500 rounded-xl text-white placeholder-white-400 focus:outline-none focus:border-your-orange disabled:opacity-50"
+                    className="w-full px-4 py-3 pr-12 bg-your-black/5 border border-your-cream/35 rounded-xl text-your-cream placeholder:text-your-cream/55 focus:outline-none focus:border-your-wine-light focus:ring-2 focus:ring-your-wine-light/40 disabled:opacity-50"
                   />
                   <button
                     type="submit"
                     disabled={isSubscribing}
-                    className="absolute inset-y-0 right-3 flex items-center justify-center text-white-400 hover:text-your-orange focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
+                    aria-label="Subscribe by email"
+                    className="absolute inset-y-0 right-2 min-h-11 min-w-11 flex items-center justify-center rounded-lg text-your-cream/80 hover:text-your-wine-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-your-wine-light disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {isSubscribing ? (
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-your-orange"></div>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-your-wine-light"></div>
                     ) : (
                       <Send size={20} />
                     )}
                   </button>
                 </div>
               </form>
+              <p className="mt-2 min-h-5 text-sm text-your-cream/80" role="status" aria-live="polite">
+                {newsletterMessage}
+              </p>
             </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-display font-medium mb-4 text-your-orange">Quick Links</h3>
+            <h3 className="text-lg font-display font-extrabold mb-4 text-your-wine-light">Quick Links</h3>
             <ul className="space-y-3">
               <li>
-                <Link href="/" className="text-gray-300 hover:text-your-orange transition-colors duration-200">
+                <Link href="/" className="text-your-cream/80 hover:text-your-wine-light transition-colors duration-200">
                   Home
                 </Link>
               </li>
               <li>
-                <Link href="/menu" className="text-gray-300 hover:text-your-orange transition-colors duration-200">
+                <Link href="/menu" className="text-your-cream/80 hover:text-your-wine-light transition-colors duration-200">
                   Menu
                 </Link>
               </li>
               <li>
-                <Link href="/catering" className="text-gray-300 hover:text-your-orange transition-colors duration-200">
+                <Link href="/catering" className="text-your-cream/80 hover:text-your-wine-light transition-colors duration-200">
                   Catering
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="text-gray-300 hover:text-your-orange transition-colors duration-200">
+                <Link href="/about" className="text-your-cream/80 hover:text-your-wine-light transition-colors duration-200">
                   About Us
                 </Link>
               </li>
@@ -116,22 +110,22 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div>
-            <h3 className="text-lg font-display font-medium mb-4 text-your-orange">Get in Touch</h3>
-            <ul className="space-y-3 text-gray-300">
+            <h3 className="text-lg font-display font-extrabold mb-4 text-your-wine-light">Get in Touch</h3>
+            <ul className="space-y-3 text-your-cream/80">
               <li className="flex items-center">
-                <MapPin size={18} className="text-your-orange mr-2 flex-shrink-0" />
+                <MapPin size={18} className="text-your-wine-light mr-2 flex-shrink-0" />
                 <a 
                   href={siteConfig.mapsLink} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="hover:text-your-orange transition-colors"
+                  className="hover:text-your-wine-light transition-colors"
                 >
                   {siteConfig.addressDisplay}
                 </a>
               </li>
               <li className="flex items-center">
-                <Mail size={18} className="text-your-orange mr-2 flex-shrink-0" />
-                <a href={`mailto:${siteConfig.emailContact}`} className="hover:text-your-orange transition-colors">{siteConfig.emailContact}</a>
+                <Mail size={18} className="text-your-wine-light mr-2 flex-shrink-0" />
+                <a href={`mailto:${siteConfig.emailContact}`} className="hover:text-your-wine-light transition-colors">{siteConfig.emailContact}</a>
               </li>
               <li className="flex items-center">
                 <svg 
@@ -144,61 +138,48 @@ const Footer = () => {
                   strokeWidth="2" 
                   strokeLinecap="round" 
                   strokeLinejoin="round"
-                  className="text-your-orange mr-2 flex-shrink-0"
+                  className="text-your-wine-light mr-2 flex-shrink-0"
                 >
                   <path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21" />
                   <path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1Z" />
                   <path d="M14 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1Z" />
                   <path d="M9.5 13.5c.5 1 1.5 1 2.5 1s2-.5 2.5-1" />
                 </svg>
-                <a href={`https://wa.me/${siteConfig.whatsappDigits}`} className="hover:text-your-orange transition-colors">{siteConfig.phoneDisplay}</a>
+                <a href={`https://wa.me/${siteConfig.whatsappDigits}`} className="hover:text-your-wine-light transition-colors">{siteConfig.phoneDisplay}</a>
               </li>
-              <li className="flex items-center">
-                <Clock size={18} className="text-your-orange mr-2 flex-shrink-0" />
-                <span>
-                  {siteConfig.hoursLine1}<br/>
-                  {siteConfig.hoursLine2}
-                </span>
+              <li className="flex items-start">
+                <Clock size={18} className="text-your-wine-light mr-2 mt-0.5 flex-shrink-0" />
+                <BusinessHours compact className="w-full" />
               </li>
             </ul>
           </div>
 
-          {/* Follow Us */}
+          {/* Developer portfolio links */}
           <div>
-            <h3 className="text-lg font-display font-medium mb-4 text-your-orange">Follow Us</h3>
-            <div className="flex space-x-4">
-                <a href={siteConfig.social.instagram} target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-your-orange transition-colors" aria-label="Instagram">
-                  <Instagram size={20} />
-                </a>
-                <a href={siteConfig.social.facebook} target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-your-orange transition-colors" aria-label="Facebook">
-                  <Facebook size={20} />
-                </a>
-                <a href={siteConfig.social.x} target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-your-orange transition-colors" aria-label="X (formerly Twitter)">
-                  <XIcon size={20} />
-                </a>
-              <a href={siteConfig.social.tiktok} target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-your-orange transition-colors" aria-label="TikTok">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
-                </svg>
-              </a>
-                <a href={siteConfig.social.youtube} target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-your-orange transition-colors" aria-label="YouTube">
-                  <Youtube size={20} />
-                </a>
-            </div>
+            <h3 className="text-lg font-display font-extrabold mb-4 text-your-wine-light">About the Developer</h3>
+            <p className="mb-4 text-your-cream/80">Built by {siteConfig.developer.name}</p>
+            <ul className="space-y-3 text-your-cream/80">
+              <li><a href={siteConfig.developer.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-your-wine-light transition-colors"><Github size={18} />Developer GitHub</a></li>
+              {siteConfig.developer.instagram && <li><a href={siteConfig.developer.instagram} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-your-wine-light transition-colors"><Instagram size={18} />Personal Instagram</a></li>}
+              <li><a href={siteConfig.developer.portfolio} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-your-wine-light transition-colors"><ExternalLink size={18} />View More Projects</a></li>
+            </ul>
           </div>
         </div>
 
         <div className="text-center mt-6 mb-2 md:mb-2">
           <Link href="/" className="inline-block">
             <h2 className="flex items-center justify-center w-[85vw] mx-auto">
-              <span className="font-samarkan text-[10vw] md:text-[12vw] text-your-orange leading-none">{siteConfig.brandWordPrimary} </span>
-              <span className="font-display text-[6vw] md:text-[8vw] font-bold ml-2 tracking-tight text-white leading-none">{siteConfig.brandWordSecondary}</span>
+              <span className="font-brand text-[8vw] md:text-[10vw] text-your-wine-light leading-none">{siteConfig.brandWordPrimary} </span>
+              <span className="font-brand text-[8vw] md:text-[10vw] font-bold ml-3 tracking-tight text-your-cream leading-none">{siteConfig.brandWordSecondary}</span>
             </h2>
           </Link>
         </div>
-        <div className="border-t border-gray-800 mt-1 pt-2 pb-4 flex flex-col md:flex-row justify-between items-center text-gray-400 text-sm">
-          <p className="mb-1 md:mb-0">designed by <a href="https://sol3studio.com" target="_blank" rel="noopener noreferrer" className="text-your-orange hover:text-white transition-colors">Sol3 Studio</a></p>
-          <p>© {currentYear} {siteConfig.businessName}. All rights reserved.</p>
+        <div className="border-t border-your-cream/15 mt-1 pt-3 pb-4 text-center text-your-cream/60 text-sm">
+          <p className="mb-3 font-semibold text-your-cream/75">Concept portfolio project — not an operating restaurant.</p>
+          <div className="flex flex-col items-center justify-between gap-2 md:flex-row">
+            <p>Built by <a href={siteConfig.developer.github} target="_blank" rel="noopener noreferrer" className="text-your-wine-light hover:text-your-cream transition-colors">{siteConfig.developer.name}</a></p>
+            <p>© {currentYear} {siteConfig.businessName}. Portfolio demonstration.</p>
+          </div>
         </div>
       </div>
     </footer>;

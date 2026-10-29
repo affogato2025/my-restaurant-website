@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { motion, Transition, Variants } from "framer-motion";
+import { motion, Transition } from "framer-motion";
 import React, { CSSProperties } from "react";
 
 type SpinningTextProps = {
@@ -12,23 +12,6 @@ type SpinningTextProps = {
   fontSize?: number;
   radius?: number;
   transition?: Transition;
-  variants?: {
-    container?: Variants;
-    item?: Variants;
-  };
-};
-
-const BASE_TRANSITION = {
-  repeat: Infinity,
-};
-
-const BASE_ITEM_VARIANTS = {
-  hidden: {
-    opacity: 1,
-  },
-  visible: {
-    opacity: 1,
-  },
 };
 
 export function SpinningText({
@@ -39,7 +22,6 @@ export function SpinningText({
   reverse = false,
   radius = 5,
   transition,
-  variants,
 }: SpinningTextProps) {
   if (typeof children !== "string" && !Array.isArray(children)) {
     throw new Error("children must be a string or an array of strings");

@@ -1,0 +1,7 @@
+{
+  "profile": "marketing-site",
+  "sourceRoots": ["src"],
+  "ownership": {
+    "Select/Listbox": "native"
+  }
+}

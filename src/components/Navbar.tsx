@@ -10,9 +10,7 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
-
-  // Check if we're on home or about page
-  const isHomeOrAbout = pathname === '/' || pathname === '/about';
+  const focusClass = 'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-your-wine-light';
 
   // Handle scroll effect
   useEffect(() => {
@@ -34,7 +32,7 @@ const Navbar = () => {
       // If we're already on the page, scroll to top immediately
       window.scrollTo({
         top: 0,
-        behavior: 'smooth'
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
       });
     } else {
       // If we're navigating to a different page, navigate first
@@ -43,21 +41,24 @@ const Navbar = () => {
     }
   };
 
-  // Close mobile menu when route changes
   useEffect(() => {
-    setIsMobileMenuOpen(false);
-  }, [pathname]);
+    if (!isMobileMenuOpen) return;
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setIsMobileMenuOpen(false);
+    };
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, [isMobileMenuOpen]);
 
   // Removed payment page check since we no longer have payment pages
-  const useDarkText = isScrolled;
-  
-  return <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${useDarkText ? 'bg-white/90 backdrop-blur-md shadow-sm py-3' : 'bg-transparent py-5'}`}>
-      <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
+  return <header className={`fixed top-0 left-0 right-0 z-50 bg-your-black/90 text-your-cream backdrop-blur-md transition-all duration-300 ${isScrolled ? 'shadow-lg py-3' : 'py-4'}`}>
+      <div className="container relative mx-auto px-4 md:px-6 flex items-center justify-between">
         {/* Left Nav */}
         <nav className="hidden md:flex items-center space-x-8 flex-1 justify-start">
-          <Link 
-            href="/menu" 
-            className={`font-display font-semibold uppercase tracking-wider text-md px-2 py-1 rounded transition-colors duration-300 ${false ? 'text-your-black hover:text-your-orange' : useDarkText ? 'text-gray-900 hover:text-your-orange' : 'text-white hover:text-your-orange'} ${false ? '!text-your-black !hover:text-your-orange' : ''}`}
+          <Link
+            href="/menu"
+            className={`font-display font-bold uppercase tracking-[0.12em] text-sm px-2 py-2 rounded-md text-your-cream hover:text-your-wine-light transition-colors duration-300 ${focusClass}`}
+            aria-current={pathname === '/menu' ? 'page' : undefined}
             onClick={(e) => {
               e.preventDefault();
               handleNavClick('/menu');
@@ -65,9 +66,10 @@ const Navbar = () => {
           >
             Menu
           </Link>
-          <Link 
-            href="/catering" 
-            className={`font-display font-semibold uppercase tracking-wider text-md px-2 py-1 rounded transition-colors duration-300 ${false ? 'text-your-black hover:text-your-orange' : useDarkText ? 'text-gray-900 hover:text-your-orange' : 'text-white hover:text-your-orange'} ${false ? '!text-your-black !hover:text-your-orange' : ''}`}
+          <Link
+            href="/catering"
+            className={`font-display font-bold uppercase tracking-[0.12em] text-sm px-2 py-2 rounded-md text-your-cream hover:text-your-wine-light transition-colors duration-300 ${focusClass}`}
+            aria-current={pathname === '/catering' ? 'page' : undefined}
             onClick={(e) => {
               e.preventDefault();
               handleNavClick('/catering');
@@ -78,25 +80,27 @@ const Navbar = () => {
         </nav>
 
         {/* Centered Logo/Title */}
-        <div className="flex-1 flex justify-center">
-          <Link 
-            href="/" 
-            className="flex items-center"
+        <div className="flex-1 flex min-w-0 justify-center">
+          <Link
+            href="/"
+            className={`flex items-center rounded-md font-brand text-your-cream ${focusClass}`}
+            aria-current={pathname === '/' ? 'page' : undefined}
             onClick={(e) => {
               e.preventDefault();
               handleNavClick('/');
             }}
           >
-            <span className="font-samarkan text-4xl text-your-orange">{siteConfig.brandWordPrimary}</span>
-            <span className={`font-display text-2xl font-bold ml-2 tracking-wide transition-colors duration-300 ${false ? 'text-your-black' : useDarkText ? 'text-gray-900' : 'text-white'} ${false ? '!text-your-black' : ''}`}>{siteConfig.brandWordSecondary}</span>
+            <span className="font-brand text-xl sm:text-2xl md:text-3xl text-your-wine-light">{siteConfig.brandWordPrimary}</span>
+            <span className="font-brand text-xl sm:text-2xl md:text-3xl ml-2 tracking-tight text-your-cream">{siteConfig.brandWordSecondary}</span>
           </Link>
         </div>
 
         {/* Right Nav */}
         <nav className="hidden md:flex items-center space-x-8 flex-1 justify-end">
-          <Link 
-            href="/about" 
-            className={`font-display font-semibold uppercase tracking-wider text-md px-2 py-1 rounded transition-colors duration-300 ${false ? 'text-your-black hover:text-your-orange' : useDarkText ? 'text-gray-900 hover:text-your-orange' : 'text-white hover:text-your-orange'} ${false ? '!text-your-black !hover:text-your-orange' : ''}`}
+          <Link
+            href="/about"
+            className={`font-display font-bold uppercase tracking-[0.12em] text-sm px-2 py-2 rounded-md text-your-cream hover:text-your-wine-light transition-colors duration-300 ${focusClass}`}
+            aria-current={pathname === '/about' ? 'page' : undefined}
             onClick={(e) => {
               e.preventDefault();
               handleNavClick('/about');
@@ -107,11 +111,13 @@ const Navbar = () => {
         </nav>
 
         {/* Mobile Menu Button */}
-        <div className="md:hidden flex items-center">
-          <button 
-            className={`transition-colors duration-300 ${false ? 'text-your-black hover:text-your-orange' : useDarkText ? 'text-gray-900 hover:text-your-orange' : 'text-white hover:text-your-orange'} ${false ? '!text-your-black !hover:text-your-orange' : ''}`} 
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
-            aria-label="Toggle menu"
+        <div className="md:hidden absolute left-3 top-1/2 -translate-y-1/2 flex items-center">
+          <button
+            className={`min-h-11 min-w-11 inline-flex items-center justify-center rounded-full text-your-cream hover:bg-your-black/10 hover:text-your-wine-light transition-colors duration-300 ${focusClass}`}
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label={isMobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-navigation"
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -119,11 +125,12 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Navigation - Updated Order */}
-      {isMobileMenuOpen && <div className="md:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-md shadow-md animate-fade-in">
+      {isMobileMenuOpen && <div id="mobile-navigation" className="md:hidden absolute top-full left-0 right-0 bg-your-black/98 text-your-cream backdrop-blur-md shadow-xl border-t border-your-cream/20 animate-fade-in">
           <nav className="container mx-auto px-4 py-6 flex flex-col space-y-4">
-            <Link 
-              href="/" 
-              className="px-4 py-2 hover:bg-your-orange/10 rounded-md transition-colors text-your-black hover:text-your-orange"
+            <Link
+              href="/"
+              className={`min-h-11 px-4 py-3 font-bold hover:bg-your-orange/10 rounded-lg transition-colors text-your-cream hover:text-your-wine-light ${focusClass}`}
+              aria-current={pathname === '/' ? 'page' : undefined}
               onClick={(e) => {
                 e.preventDefault();
                 handleNavClick('/');
@@ -131,9 +138,10 @@ const Navbar = () => {
             >
               Home
             </Link>
-            <Link 
-              href="/menu" 
-              className="px-4 py-2 hover:bg-your-orange/10 rounded-md transition-colors text-your-black hover:text-your-orange"
+            <Link
+              href="/menu"
+              className={`min-h-11 px-4 py-3 font-bold hover:bg-your-orange/10 rounded-lg transition-colors text-your-cream hover:text-your-wine-light ${focusClass}`}
+              aria-current={pathname === '/menu' ? 'page' : undefined}
               onClick={(e) => {
                 e.preventDefault();
                 handleNavClick('/menu');
@@ -141,9 +149,10 @@ const Navbar = () => {
             >
               Menu
             </Link>
-            <Link 
-              href="/catering" 
-              className="px-4 py-2 hover:bg-your-orange/10 rounded-md transition-colors text-your-black hover:text-your-orange"
+            <Link
+              href="/catering"
+              className={`min-h-11 px-4 py-3 font-bold hover:bg-your-orange/10 rounded-lg transition-colors text-your-cream hover:text-your-wine-light ${focusClass}`}
+              aria-current={pathname === '/catering' ? 'page' : undefined}
               onClick={(e) => {
                 e.preventDefault();
                 handleNavClick('/catering');
@@ -151,9 +160,10 @@ const Navbar = () => {
             >
               Catering
             </Link>
-            <Link 
-              href="/about" 
-              className="px-4 py-2 hover:bg-your-orange/10 rounded-md transition-colors text-your-black hover:text-your-orange"
+            <Link
+              href="/about"
+              className={`min-h-11 px-4 py-3 font-bold hover:bg-your-orange/10 rounded-lg transition-colors text-your-cream hover:text-your-wine-light ${focusClass}`}
+              aria-current={pathname === '/about' ? 'page' : undefined}
               onClick={(e) => {
                 e.preventDefault();
                 handleNavClick('/about');
