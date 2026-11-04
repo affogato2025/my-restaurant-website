@@ -456,7 +456,7 @@ const AboutPage = () => {
               >
                 <div className="h-[400px]">
                   <iframe
-                    src={`https://www.google.com/maps?q=${encodeURIComponent(siteConfig.addressDisplay)}&output=embed`}
+                    src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3023.425415705054!2d-74.00474562388933!3d40.73066373647284!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25993b54b0599%3A0x11391b37b33ccf81!2zNyBDYXJtaW5lIFN0LCBOZXcgWW9yaywgTlkgMTAwMTTnvo7lm70!5e0!3m2!1szh-CN!2s!4v1793777369319!5m2!1szh-CN!2s`}
                     width="100%"
                     height="100%"
                     style={{ border: 0 }}
